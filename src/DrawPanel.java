@@ -11,8 +11,10 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
     private boolean placed;
     private Player p;
     private Grid grid;
+    private boolean lost;
 
     public DrawPanel() {
+        lost = false;
         p = new Player();
         grid = new Grid();
         this.addMouseListener(this);
@@ -21,25 +23,42 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
     }
 
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
+        if (!lost) {
+            super.paintComponent(g);
 
-        g.setColor(Color.cyan);
-        g.fillRect(p.getX() * 30 ,p.getY() * 30,30,30);
-        g.setColor(Color.black);
+            g.setColor(Color.cyan);
+            g.fillRect(p.getX() * 30, p.getY() * 30, 30, 30);
+            g.setColor(Color.black);
 
-        Graphics2D g2 = (Graphics2D) g;
+            Graphics2D g2 = (Graphics2D) g;
 
-        int y = 0;
-        // Drawing squares 30 x 40
-        for (int rows = 0; rows < 30; rows++) {
-            int x = 0;
+            int y = 0;
+            // Drawing squares 30 x 40
+            for (int rows = 0; rows < 30; rows++) {
+                int x = 0;
 
-            for (int cols = 0; cols < 40; cols++) {
-                g.drawRect(x, y, 30, 30);
-                x += 30;
+                for (int cols = 0; cols < 40; cols++) {
+                    g.drawRect(x, y, 30, 30);
+                    x += 30;
+                }
+                y += 30;
             }
-            y += 30;
+
+            lost = lose();
         }
+    }
+
+    public boolean lose(){
+        System.out.println(p.getX());
+        System.out.println(p.getY());
+        if (p.getY() > 29){
+            return true;
+        } else if (p.getX() > 39){
+            return true;
+        } else if (p.getX() < 0){
+            return true;
+        }
+        return false;
     }
 
     public void movePlayer(String key){
