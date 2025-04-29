@@ -5,8 +5,8 @@ public class Player {
 
     public Player(){
         number = 9;
-        x = 15;
-        y = 39;
+        x = 19;
+        y = 28;
     }
 
     public int getNum(){

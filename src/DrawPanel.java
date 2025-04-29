@@ -7,23 +7,24 @@ import javax.swing.JPanel;
 import java.io.File;
 import java.util.ArrayList;
 
-public class DrawPanel extends JPanel implements KeyListener {
+public class DrawPanel extends JPanel implements MouseListener, KeyListener {
     private boolean placed;
     private Player p;
     private Grid grid;
-    private String key;
 
     public DrawPanel() {
         p = new Player();
         grid = new Grid();
+        this.addMouseListener(this);
         this.addKeyListener(this);
+        this.setFocusable(true);
     }
 
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
         g.setColor(Color.cyan);
-        g.fillRect(p.getX() * 20 ,p.getY() * 20,30,30);
+        g.fillRect(p.getX() * 30 ,p.getY() * 30,30,30);
         g.setColor(Color.black);
 
         Graphics2D g2 = (Graphics2D) g;
@@ -41,34 +42,54 @@ public class DrawPanel extends JPanel implements KeyListener {
         }
     }
 
-    public void movePlayer(){
+    public void movePlayer(String key){
         if (key.equals("a")){
             p.setX(-1);
         } else if (key.equals("w")){
-            p.setY(1);
+            p.setY(-1);
         } else if (key.equals("d")){
             p.setX(1);
         } else if (key.equals("s")){
-            p.setY(-1);
+            p.setY(1);
         }
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
+        String key = String.valueOf(e.getKeyChar());
+        movePlayer(key);
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-        System.out.println("pressed");
-        System.out.println(e.getKeyChar());
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        // NOTE: THIS DOESN'T INTERACT WITH KEYS FOR SOME REASON
-        // NOTHING IS PRINTING
-        System.out.println(String.valueOf(e.getKeyChar()));
-        key = String.valueOf(e.getKeyChar());
     }
 
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
 }
