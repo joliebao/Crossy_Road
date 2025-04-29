@@ -43,14 +43,15 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
                 }
                 y += 30;
             }
-
             lost = lose();
+        } else {
+            Font font = new Font("Georgia", Font.BOLD, 100);
+            g.setFont(font);
+            g.drawString("YOU LOST!", 200, 200);
         }
     }
 
     public boolean lose(){
-        System.out.println(p.getX());
-        System.out.println(p.getY());
         if (p.getY() > 29){
             return true;
         } else if (p.getX() > 39){
