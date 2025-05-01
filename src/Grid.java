@@ -70,17 +70,17 @@ public class Grid {
             int xVal = (int) (Math.random() * 40);
             int yVal = (int) (Math.random() * 30);
             int objectNum = 4 + (int) (Math.random() * 4);
-            if (objectNum == 4){
 
+            if (objectNum > 4){
+                Item v = new Vehicle(objectNum, xVal, yVal);
+                // make grid take in object values     grid[xVal][yVal] = ;
+            } else {
+                Item boulder = new Item(objectNum, xVal, yVal);
+                // make grid take in object values     grid[xVal][yVal] = ;
             }
         }
         System.out.println();
         printMapping();
-
-        // NEED TO MAKE OBJECTS TOO; NOT SURE IF THEY SHOULD INDIVIDUALLY HAVE A CLASS;
-        // MIGHT NOT BE NECESSARY FOR COLLISIONS THOUGH
-        // COLLISIONS COULD BE DONE BY LOCATION BASED THINGS
-        // ALSO ONLY CERTAIN OBJECTS MOVE...
     }
 
     public void UpdateGrid(){
