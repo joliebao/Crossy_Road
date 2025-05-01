@@ -64,6 +64,16 @@ public class Grid {
                 }
             }
         }
+
+        // objects
+        for (int x = 0; x < 30; x++){
+            int xVal = (int) (Math.random() * 40);
+            int yVal = (int) (Math.random() * 30);
+            int objectNum = 4 + (int) (Math.random() * 4);
+            if (objectNum == 4){
+
+            }
+        }
         System.out.println();
         printMapping();
 
