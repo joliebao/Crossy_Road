@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Grid {
@@ -17,6 +18,8 @@ public class Grid {
             Character: 9
     */
     public Grid(){
+        ArrayList<Integer> usedRow = new ArrayList<Integer>();
+
         for (int i = 0; i < grid.length; i++){
             for (int j = 0; j < grid[0].length; j++){
                 grid[i][j] = 0;
@@ -24,29 +27,37 @@ public class Grid {
         }
 
         // FLOORING
-        for (int x = 0; x < 10; x++) {
+        for (int x = 0; x < 13; x++) {
             double probability = Math.random();
-//            System.out.println(probability);
             if (probability < 0.7 && probability > 0.4) { // concrete
-                int startingRow = (int) Math.random() * 25;
-                for (int i = startingRow; i < startingRow + (int) Math.random() * 4; i++) {
-                    System.out.println(i);
+                int startingRow = (int) (Math.random() * 22);
+                while (usedRow.contains(startingRow)){
+                    startingRow = (int) (Math.random() * 22);
+                }
+                for (int i = startingRow; i < startingRow + 1 + (int) (Math.random() * 4); i++) {
+                    usedRow.add(i);
                     for (int j = 0; j < grid[0].length; j++) {
                         grid[i][j] = 1;
                     }
                 }
             } else if (probability < 0.85 && probability > 0.7) { // train tracks
-                int startingRow = (int) Math.random() * 25;
-                for (int i = startingRow; i < startingRow + (int) Math.random() * 2; i++) {
-                    System.out.println(i);
+                int startingRow = (int) (Math.random() * 22);
+                while (usedRow.contains(startingRow)){
+                    startingRow = (int) (Math.random() * 22);
+                }
+                for (int i = startingRow; i < startingRow + 1 + (int) (Math.random() * 3); i++) {
+                    usedRow.add(i);
                     for (int j = 0; j < grid[0].length; j++) {
                         grid[i][j] = 3;
                     }
                 }
-            } else if (probability < 1 && probability > 0.85) { // water
-                int startingRow = (int) Math.random() * 25;
-                for (int i = startingRow; i < startingRow + (int) Math.random() * 2; i++) {
-                    System.out.println(i);
+            } else if (probability > 0.85) { // water
+                int startingRow = (int) (Math.random() * 22);
+                while (usedRow.contains(startingRow)){
+                    startingRow = (int) (Math.random() * 22);
+                }
+                for (int i = startingRow; i < startingRow + 1 + (int) (Math.random() * 4); i++) {
+                    usedRow.add(i);
                     for (int j = 0; j < grid[0].length; j++) {
                         grid[i][j] = 2;
                     }
