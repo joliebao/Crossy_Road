@@ -1,15 +1,10 @@
-public class Vehicle {
-    private int numAssociation;
+public class Vehicle extends Item{
     private int size;
-    private int x;
-    private int y;
     private int speed;
 
     public Vehicle (int num, int length, int x, int y){
-        numAssociation = num;
+        super(num, x, y);
         size = length;
-        this.x = x;
-        this.y = y;
 
         if (numAssociation == 5 || numAssociation == 6){
             speed = 4;
@@ -24,20 +19,8 @@ public class Vehicle {
         return size;
     }
 
-    public int start(){
-        return x;
-    }
-
     public int end(){
         return x+size;
-    }
-
-    public int place(){
-        return y;
-    }
-
-    public int getNumAssociation(){
-        return numAssociation;
     }
 
     public int getSpeed(){
