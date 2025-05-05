@@ -20,4 +20,9 @@ public class Item {
     public int getNumAssociation(){
         return numAssociation;
     }
+
+    @Override
+    public String toString() {
+        return numAssociation + "";
+    }
 }

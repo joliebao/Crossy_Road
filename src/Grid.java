@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Grid {
-    private int[][] grid = new int[30][40];
+    private Item[][] grid = new Item[30][40];
 
     // generate random grid -> needs numbers from 1-9 randomly generated
     /* Below is the key used to represent each item ↓
@@ -20,14 +20,18 @@ public class Grid {
     public Grid(){
         ArrayList<Integer> usedRow = new ArrayList<Integer>();
 
+        int y = 0;
         for (int i = 0; i < grid.length; i++){
+            int x = 0;
             for (int j = 0; j < grid[0].length; j++){
-                grid[i][j] = 0;
+                grid[i][j] = new Item(0, x, y);
+                x += 30;
             }
+            y += 30;
         }
 
         // FLOORING
-        for (int x = 0; x < 13; x++) {
+        for (int counter = 0; counter < 13; counter++) {
             double probability = Math.random();
             if (probability < 0.7 && probability > 0.4) { // concrete
                 int startingRow = (int) (Math.random() * 22);
@@ -36,8 +40,11 @@ public class Grid {
                 }
                 for (int i = startingRow; i < startingRow + 1 + (int) (Math.random() * 4); i++) {
                     usedRow.add(i);
+                    y = startingRow;
+                    int x = 0;
                     for (int j = 0; j < grid[0].length; j++) {
-                        grid[i][j] = 1;
+                        grid[i][j] = new Item(1, x, y);
+                        x += 30;
                     }
                 }
             } else if (probability < 0.85 && probability > 0.7) { // train tracks
@@ -47,8 +54,11 @@ public class Grid {
                 }
                 for (int i = startingRow; i < startingRow + 1 + (int) (Math.random() * 3); i++) {
                     usedRow.add(i);
+                    y = startingRow;
+                    int x = 0;
                     for (int j = 0; j < grid[0].length; j++) {
-                        grid[i][j] = 3;
+                        grid[i][j] = new Item(3, x, y);
+                        x += 30;
                     }
                 }
             } else if (probability > 0.85) { // water
@@ -58,8 +68,11 @@ public class Grid {
                 }
                 for (int i = startingRow; i < startingRow + 1 + (int) (Math.random() * 4); i++) {
                     usedRow.add(i);
+                    y = startingRow;
+                    int x = 0;
                     for (int j = 0; j < grid[0].length; j++) {
-                        grid[i][j] = 2;
+                        grid[i][j] = new Item(2, x, y);
+                        x += 30;
                     }
                 }
             }
