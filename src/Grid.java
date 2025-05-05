@@ -79,17 +79,28 @@ public class Grid {
         }
 
         // objects
-        for (int x = 0; x < 30; x++){
-            int xVal = (int) (Math.random() * 40);
+        for (int counter = 0; counter < 30; counter++){
+            int xVal = (int) (Math.random() * 34);
             int yVal = (int) (Math.random() * 30);
-            int objectNum = 4 + (int) (Math.random() * 4);
+            int objectNum = 4 + (int) (Math.random() * 5);
 
-            if (objectNum > 4){
-                Item v = new Vehicle(objectNum, xVal, yVal);
-                // make grid take in object values     grid[xVal][yVal] = ;
-            } else {
-                Item boulder = new Item(objectNum, xVal, yVal);
-                // make grid take in object values     grid[xVal][yVal] = ;
+            if (objectNum > 4){ // vehicles
+                int size = 2;
+                if (objectNum == 5) { // car
+                    size = 2 + (int) (Math.random() * 1);
+                } else if (objectNum == 6){ // truck
+                    size = 3 + (int) (Math.random() * 2);
+                } else if (objectNum == 7){ // train
+                    size = 60;
+                } else if (objectNum == 8){ // log
+                    size = 5 + (int) (Math.random() * 2);
+                }
+
+                for (int i = xVal; i < (xVal + size); i++) {
+                    grid[yVal][xVal] = new Vehicle(objectNum, xVal * 30, yVal * 30);
+                }
+            } else {    // boulders
+                grid[yVal][xVal] = new Item(objectNum, xVal * 30, yVal * 30);
             }
         }
         System.out.println();
@@ -97,7 +108,15 @@ public class Grid {
     }
 
     public void UpdateGrid(){
+        long time = System.currentTimeMillis();
+        // delete row, move everything down :( ; generate new row
+        if (System.currentTimeMillis() - time == 500){
+            for (int x = 0; x < grid[0].length; x++){
+                for (int y = 0; y < grid.length; y++){
 
+                }
+            }
+        }
     }
 
     private void printMapping(){
