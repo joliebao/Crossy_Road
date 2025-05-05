@@ -30,6 +30,11 @@ public class Grid {
             y += 30;
         }
 
+        // OBJECT: BOULDERS ---------------
+        int xVal = (int) (Math.random() * 32);
+        int yVal = (int) (Math.random() * 30);
+        grid[yVal][xVal] = new Item(4, xVal * 30, yVal * 30);
+
         // FLOORING
         for (int counter = 0; counter < 13; counter++) {
             double probability = Math.random();
@@ -61,10 +66,21 @@ public class Grid {
                         x += 30;
                     }
                 }
+
+                // OBJECT: TRAIN (NEED TO BE IN BOOLEAN) :( DO LATER ///////////////
+                for (int col = 0; col < 40; col++) {
+                    grid[startingRow][col] = new Vehicle(7, col * 30, startingRow * 30);
+                }
             } else if (probability > 0.85) { // water
                 int startingRow = (int) (Math.random() * 22);
                 while (usedRow.contains(startingRow)){
                     startingRow = (int) (Math.random() * 22);
+
+                    // OBJECT: LOGS
+                    int c = (int) (Math.random() * 32);
+                    for (int col = c; col < c + 5 + (int) (Math.random() * 2); col++) {
+                        grid[startingRow][col] = new Vehicle(7, col * 30, startingRow * 30);
+                    }
                 }
                 for (int i = startingRow; i < startingRow + 1 + (int) (Math.random() * 4); i++) {
                     usedRow.add(i);
@@ -73,6 +89,12 @@ public class Grid {
                     for (int j = 0; j < grid[0].length; j++) {
                         grid[i][j] = new Item(2, x, y);
                         x += 30;
+                    }
+
+                    // OBJECT: LOGS
+                    int c = (int) (Math.random() * 32);
+                    for (int col = c; col < c + 5 + (int) (Math.random() * 2); col++) {
+                        grid[startingRow][col] = new Vehicle(7, col * 30, startingRow * 30);
                     }
                 }
             }
@@ -90,19 +112,12 @@ public class Grid {
                     size = 2 + (int) (Math.random() * 1);
                 } else if (objectNum == 6){ // truck
                     size = 3 + (int) (Math.random() * 2);
-                } else if (objectNum == 7){ // train
-                    xVal = 0;
-                    size = 40;
-                } else if (objectNum == 8){ // log
-                    size = 5 + (int) (Math.random() * 2);
                 }
 
                 for (int i = xVal; i < (xVal + size); i++) {
                     System.out.println(i);
                     grid[yVal][i] = new Vehicle(objectNum, xVal * 30, yVal * 30);
                 }
-            } else {    // boulders
-                grid[yVal][xVal] = new Item(objectNum, xVal * 30, yVal * 30);
             }
         }
         System.out.println();
