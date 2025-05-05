@@ -80,7 +80,7 @@ public class Grid {
 
         // objects
         for (int counter = 0; counter < 30; counter++){
-            int xVal = (int) (Math.random() * 34);
+            int xVal = (int) (Math.random() * 32);
             int yVal = (int) (Math.random() * 30);
             int objectNum = 4 + (int) (Math.random() * 5);
 
@@ -91,13 +91,15 @@ public class Grid {
                 } else if (objectNum == 6){ // truck
                     size = 3 + (int) (Math.random() * 2);
                 } else if (objectNum == 7){ // train
-                    size = 60;
+                    xVal = 0;
+                    size = 40;
                 } else if (objectNum == 8){ // log
                     size = 5 + (int) (Math.random() * 2);
                 }
 
                 for (int i = xVal; i < (xVal + size); i++) {
-                    grid[yVal][xVal] = new Vehicle(objectNum, xVal * 30, yVal * 30);
+                    System.out.println(i);
+                    grid[yVal][i] = new Vehicle(objectNum, xVal * 30, yVal * 30);
                 }
             } else {    // boulders
                 grid[yVal][xVal] = new Item(objectNum, xVal * 30, yVal * 30);
