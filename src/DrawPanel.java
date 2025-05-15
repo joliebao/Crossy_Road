@@ -47,7 +47,7 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
         } else {
             Font font = new Font("Georgia", Font.BOLD, 100);
             g.setFont(font);
-            g.drawString("YOU LOST!", 200, 200);
+            g.drawString("YOU LOST!", 315, 450);
         }
     }
 
