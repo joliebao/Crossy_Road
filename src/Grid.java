@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -97,6 +98,71 @@ public class Grid {
         printMapping();
     }
 
+    // move constructor parts to here (:( )=|
+    // need to edit and delete some stuff in the constructor later (IDK how effective this will be or if I have to edit
+    public void placeRoad(int y, ArrayList<Integer> usedRow){
+        int startingRow = (int) (Math.random() * 22);
+        while (usedRow.contains(startingRow)){
+            startingRow = (int) (Math.random() * 22);
+        }
+        for (int i = startingRow; i < startingRow + 1 + (int) (Math.random() * 4); i++) {
+            usedRow.add(i);
+            y = startingRow;
+            int x = 0;
+            for (int j = 0; j < grid[0].length; j++) {
+                grid[i][j] = new Item(1, x, y);
+                x += 30;
+            }
+        }
+
+        // OBJECT: CAR (5)
+        for (int i = 0; i < 3; i ++) {
+            int locX = (int) (Math.random() * 30);
+            for (int col = 0; col < 2; col++) {
+                locX += col;
+                grid[startingRow][locX] = new Vehicle(5, col * 30, startingRow * 30);
+            }
+            // OBJECT: TRUCK (6)
+            locX += 3;
+            for (int col = 0; col < ((int) (Math.random() * 2)) + 4; col++) {
+                grid[startingRow][locX + col] = new Vehicle(6, col * 30, startingRow * 30);
+            }
+        }
+    }
+
+    public void placeWater(int y, ArrayList<Integer> usedRow){
+        int startingRow = (int) (Math.random() * 22);
+        while (usedRow.contains(startingRow)){
+            startingRow = (int) (Math.random() * 22);
+
+            // OBJECT: LOGS (8)
+            int c = (int) (Math.random() * 32);
+            for (int col = c; col < c + 5 + (int) (Math.random() * 2); col++) {
+                grid[startingRow][col] = new Vehicle(7, col * 30, startingRow * 30);
+            }
+        }
+    }
+
+    public void placeTracks(int y, ArrayList<Integer> usedRow){
+        int startingRow = (int) (Math.random() * 22);
+        while (usedRow.contains(startingRow)){
+            startingRow = (int) (Math.random() * 22);
+        }
+        for (int i = startingRow; i < startingRow + 1 + (int) (Math.random() * 3); i++) {
+            usedRow.add(i);
+            y = startingRow;
+            int x = 0;
+            for (int j = 0; j < grid[0].length; j++) {
+                grid[i][j] = new Item(3, x, y);
+                x += 30;
+            }
+        }
+        // OBJECT: TRAIN (7)
+        for (int col = 0; col < 40; col++) {
+            grid[startingRow][col] = new Vehicle(7, col * 30, startingRow * 30);
+        }
+    }
+
     public void UpdateGrid(){
         long time = System.currentTimeMillis();
         if (System.currentTimeMillis() - time == 500){
@@ -107,6 +173,7 @@ public class Grid {
             }
 
             // add two new rows
+
         }
     }
 
