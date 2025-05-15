@@ -46,13 +46,14 @@ public class Grid {
                 }
 
                 // OBJECT: CAR (5)
-                for (int i = 0; i < 7; i ++) {
-                    int locX = (int) (Math.random() * 35);
-                    for (int col = 0; col < ((int) (Math.random() * 2)) + 2; col++) {
-                        grid[startingRow][locX + col] = new Vehicle(5, col * 30, startingRow * 30);
+                for (int i = 0; i < 3; i ++) {
+                    int locX = (int) (Math.random() * 30);
+                    for (int col = 0; col < 2; col++) {
+                        locX += col;
+                        grid[startingRow][locX] = new Vehicle(5, col * 30, startingRow * 30);
                     }
                     // OBJECT: TRUCK (6)
-                    locX = (int) (Math.random() * 35);
+                    locX += 3;
                     for (int col = 0; col < ((int) (Math.random() * 2)) + 4; col++) {
                         grid[startingRow][locX + col] = new Vehicle(6, col * 30, startingRow * 30);
                     }
@@ -98,13 +99,14 @@ public class Grid {
 
     public void UpdateGrid(){
         long time = System.currentTimeMillis();
-        // delete row, move everything down :( ; generate new row
         if (System.currentTimeMillis() - time == 500){
-            for (int x = 0; x < grid[0].length; x++){
-                for (int y = 0; y < grid.length; y++){
-
+            for (int x = grid[0].length - 2; x > 0; x--){
+                for (int y = grid.length - 2; y > 0; y--){
+                    grid[y+2][x] = grid[y][x];
                 }
             }
+
+            // add two new rows
         }
     }
 
