@@ -29,4 +29,9 @@ public class Player {
     public void setY(int y) {
         this.y += y;
     }
+
+    @Override
+    public String toString() {
+        return "Player is at " + x + ", " + y;
+    }
 }

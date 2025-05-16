@@ -12,6 +12,7 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
     private Player p;
     private Grid grid;
     private boolean lost;
+    private int score;
 
     public DrawPanel() {
         lost = false;
@@ -20,6 +21,7 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
         this.addMouseListener(this);
         this.addKeyListener(this);
         this.setFocusable(true);
+        score = 0;
     }
 
     protected void paintComponent(Graphics g) {
@@ -29,6 +31,7 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
             g.setColor(Color.cyan);
             g.fillRect(p.getX() * 30, p.getY() * 30, 30, 30);
             g.setColor(Color.black);
+
 
             Graphics2D g2 = (Graphics2D) g;
 
@@ -78,6 +81,12 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
     public void keyTyped(KeyEvent e) {
         String key = String.valueOf(e.getKeyChar());
         movePlayer(key);
+
+        if (key.equals("W")){
+            score++;
+        } else if (key.equals("S")){
+            score--;
+        }
     }
 
     @Override

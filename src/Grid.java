@@ -57,14 +57,12 @@ public class Grid {
             for (int i = 0; i < 2; i++) {
                 int locX = (int) (Math.random() * 30);
                 for (int col = 0; col < 2; col++) {
-                    locX += col;
-                    grid[road][locX] = new Vehicle(5, col * 30, road * 30);
+                    grid[road][locX + col] = new Vehicle(5, col * 30, road * 30);
                 }
                 // OBJECT: TRUCK (6)
-                locX += 2;  // FIX THIS to make the vehicles not overlap
-                for (int col = 0; col < ((int) (Math.random() * 2)) + 4; col++) {
-                    locX += col;
-                    grid[road][locX] = new Vehicle(6, col * 30, road * 30);
+                locX = (int) (Math.random() * 30);
+                for (int col = 0; col < 4; col++) {
+                    grid[road][locX + col] = new Vehicle(6, col * 30, road * 30);
                 }
             }
         }
@@ -149,6 +147,8 @@ public class Grid {
                     placeGrass();
                 }
             }
+
+            // ADD VEHICLE MOVEMENTS_________
         }
 
         printMapping();
@@ -158,5 +158,24 @@ public class Grid {
         for (int rows = 0; rows < grid.length; rows ++){
             System.out.println(Arrays.toString(grid[rows]));
         }
+    }
+
+    public Item checkGrid(int r, int c){
+        return grid[r][c];
+    }
+
+    // NEED TO FINISH THIS AND APPLY TO EVERYTHING
+    public boolean isSafe(int r, int c){
+        int num = grid[r][c+1].getNumAssociation();
+        if (num == 2){ // water
+            return false;
+        } else if (num == 5){ // car
+            return false;
+        } else if (num == 6){ // truck
+            return false;
+        } else if (num == 7){ // train
+            return false;
+        }
+        return true;
     }
 }
