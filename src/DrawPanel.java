@@ -25,8 +25,9 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
     }
 
     protected void paintComponent(Graphics g) {
+        grid.UpdateGrid();
         if (!lost) {
-            grid.UpdateGrid();
+//            grid.UpdateGrid();
             super.paintComponent(g);
 
             g.setColor(Color.cyan);

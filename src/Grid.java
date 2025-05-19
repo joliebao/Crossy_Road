@@ -2,11 +2,6 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-// NOTE* Need to use the usedRow arraylist to check if the row was used more than a certain amount of times
-// (This will make sure the objects are well spread out)
-// Doing it later :)
-// Might also need to change some of this code because it's structure is not well done
-
 public class Grid {
     private Item[][] grid = new Item[30][40];
     long time = System.currentTimeMillis();
@@ -19,11 +14,24 @@ public class Grid {
 
         for (int counter = 0; counter < 13; counter++) {
             double probability = Math.random();
+
             // FLOORING: ROAD (1)
             if (probability < 0.7 && probability > 0.4) {
-                placeRoad(usedRow, 22);
+                int startingRow = (int) (Math.random() * 22);
+                while (usedRow.contains(startingRow)){
+                    startingRow = (int) (Math.random() * 22);
+                }
+                for (int i = startingRow; i < startingRow + 1 + (int) (Math.random() * 4); i++) {
+                    placeRoad(startingRow);
+                }
+
             // FLOORING: TRAIN TRACKS (3)
             } else if (probability < 0.85 && probability > 0.7) {
+                int startingRow = (int) (Math.random() * 22);
+                while (usedRow.contains(startingRow)){
+                    startingRow = (int) (Math.random() * 22);
+                }
+
                 placeTracks(usedRow, 22);
             // FLOORING: WATER (2)
             } else if (probability > 0.85) {
@@ -36,21 +44,12 @@ public class Grid {
         printMapping();
     }
 
-    public void placeRoad(ArrayList<Integer> usedRow, int numRows){
-        ArrayList<Integer> roads = new ArrayList<Integer>(); // prevent overlap of objects
-
-        int startingRow = (int) (Math.random() * numRows);
-        while (usedRow.contains(startingRow)){
-            startingRow = (int) (Math.random() * numRows);
-        }
-        for (int i = startingRow; i < startingRow + 1 + (int) (Math.random() * 4); i++) {
-            usedRow.add(i);
-            roads.add(i);
-            int x = 0;
-            for (int j = 0; j < grid[0].length; j++) {
-                grid[i][j] = new Item(1, x, startingRow);
-                x += 30;
-            }
+    // need to edit this to place as many roads as I input for each section
+    public void placeRoad(int row){
+        for (int j = 0; j < grid[0].length; j++) {
+            int x = j * 30;
+            grid[row][j] = new Item(1, x, row);
+            x += 30;
         }
 
         // OBJECT: CAR (5)
@@ -69,6 +68,14 @@ public class Grid {
         }
     }
 
+    public void placeCar(){
+
+    }
+
+    public void placeTruck(){
+
+    }
+
     public void placeWater(ArrayList<Integer> usedRow, int numRows){
         int startingRow = (int) (Math.random() * numRows);
         while (usedRow.contains(startingRow)){
@@ -81,6 +88,8 @@ public class Grid {
             }
         }
     }
+
+    public void placeLog(){}
 
     public void placeTracks(ArrayList<Integer> usedRow, int numRows){
         int startingRow = (int) (Math.random() * numRows);
@@ -99,6 +108,10 @@ public class Grid {
         for (int col = 0; col < 40; col++) {
             grid[startingRow][col] = new Vehicle(7, col * 30, startingRow * 30);
         }
+    }
+
+    public void placeTrain(){
+
     }
 
     public void placeGrass(int numRows){
@@ -126,29 +139,27 @@ public class Grid {
 
         if (System.currentTimeMillis() - time == 300){
             time = System.currentTimeMillis();
-            System.out.println(true);
 
-            for (int y = grid.length - 2; y > 0; y--){
+            for (int y = grid.length - 2; y >= 0; y--){
                 grid[y+1] = grid[y];
             }
 
-            // Two new generated rows
-            for (int r = 0; r < 2; r++){
-                double probability = Math.random();
+            // I have to refactor all this code so that I can generate two rows normally later
 
-                // FLOORING: ROAD (1)
-                if (probability < 0.7 && probability > 0.4) {
-                    placeRoad(usedRow, 2);
-                    // FLOORING: TRAIN TRACKS (3)
-                } else if (probability < 0.85 && probability > 0.7) {
-                    placeTracks(usedRow, 2);
-                    // FLOORING: WATER (2)
-                } else if (probability > 0.85) {
-                    placeWater(usedRow, 2);
-                } else {
-                    placeGrass(2);
-                }
-            }
+            // Two new generated rows
+//            for (int r = 0; r < 2; r++){
+//                double probability = Math.random();
+//
+//                if (probability < 0.7 && probability > 0.4) {
+//                    placeRoad(usedRow, 1);
+//                } else if (probability < 0.85 && probability > 0.7) {
+//                    placeTracks(usedRow, 1);
+//                } else if (probability > 0.85) {
+//                    placeWater(usedRow, 1);
+//                } else {
+//                    placeGrass(1);
+//                }
+//            }
 
             // ADD VEHICLE MOVEMENTS_________
 
