@@ -15,19 +15,19 @@ public class Grid {
     public Grid(){
         ArrayList<Integer> usedRow = new ArrayList<Integer>();
         // FLOORING: GRASS (0)
-        placeGrass();
+        placeGrass(grid.length);
 
         for (int counter = 0; counter < 13; counter++) {
             double probability = Math.random();
             // FLOORING: ROAD (1)
             if (probability < 0.7 && probability > 0.4) {
-                placeRoad(usedRow);
+                placeRoad(usedRow, 22);
             // FLOORING: TRAIN TRACKS (3)
             } else if (probability < 0.85 && probability > 0.7) {
-                placeTracks(usedRow);
+                placeTracks(usedRow, 22);
             // FLOORING: WATER (2)
             } else if (probability > 0.85) {
-                placeWater(usedRow);
+                placeWater(usedRow, 22);
             }
         }
 
@@ -36,12 +36,12 @@ public class Grid {
         printMapping();
     }
 
-    public void placeRoad(ArrayList<Integer> usedRow){
+    public void placeRoad(ArrayList<Integer> usedRow, int numRows){
         ArrayList<Integer> roads = new ArrayList<Integer>(); // prevent overlap of objects
 
-        int startingRow = (int) (Math.random() * 22);
+        int startingRow = (int) (Math.random() * numRows);
         while (usedRow.contains(startingRow)){
-            startingRow = (int) (Math.random() * 22);
+            startingRow = (int) (Math.random() * numRows);
         }
         for (int i = startingRow; i < startingRow + 1 + (int) (Math.random() * 4); i++) {
             usedRow.add(i);
@@ -69,10 +69,10 @@ public class Grid {
         }
     }
 
-    public void placeWater(ArrayList<Integer> usedRow){
-        int startingRow = (int) (Math.random() * 22);
+    public void placeWater(ArrayList<Integer> usedRow, int numRows){
+        int startingRow = (int) (Math.random() * numRows);
         while (usedRow.contains(startingRow)){
-            startingRow = (int) (Math.random() * 22);
+            startingRow = (int) (Math.random() * numRows);
 
             // OBJECT: LOGS (8)
             int c = (int) (Math.random() * 32);
@@ -82,10 +82,10 @@ public class Grid {
         }
     }
 
-    public void placeTracks(ArrayList<Integer> usedRow){
-        int startingRow = (int) (Math.random() * 22);
+    public void placeTracks(ArrayList<Integer> usedRow, int numRows){
+        int startingRow = (int) (Math.random() * numRows);
         while (usedRow.contains(startingRow)){
-            startingRow = (int) (Math.random() * 22);
+            startingRow = (int) (Math.random() * numRows);
         }
         for (int i = startingRow; i < startingRow + 1 + (int) (Math.random() * 3); i++) {
             usedRow.add(i);
@@ -101,10 +101,10 @@ public class Grid {
         }
     }
 
-    public void placeGrass(){
+    public void placeGrass(int numRows){
         // FLOORING: GRASS (0)
         int y = 0;
-        for (int i = 0; i < grid.length; i++){
+        for (int i = 0; i < numRows; i++){
             int x = 0;
             for (int j = 0; j < grid[0].length; j++){
                 grid[i][j] = new Item(0, x, y);
@@ -124,8 +124,9 @@ public class Grid {
     public void UpdateGrid(){
         ArrayList<Integer> usedRow = new ArrayList<Integer>();
 
-        if (System.currentTimeMillis() - time == 500){
+        if (System.currentTimeMillis() - time == 300){
             time = System.currentTimeMillis();
+            System.out.println(true);
 
             for (int y = grid.length - 2; y > 0; y--){
                 grid[y+1] = grid[y];
@@ -137,15 +138,15 @@ public class Grid {
 
                 // FLOORING: ROAD (1)
                 if (probability < 0.7 && probability > 0.4) {
-                    placeRoad(usedRow);
+                    placeRoad(usedRow, 2);
                     // FLOORING: TRAIN TRACKS (3)
                 } else if (probability < 0.85 && probability > 0.7) {
-                    placeTracks(usedRow);
+                    placeTracks(usedRow, 2);
                     // FLOORING: WATER (2)
                 } else if (probability > 0.85) {
-                    placeWater(usedRow);
+                    placeWater(usedRow, 2);
                 } else {
-                    placeGrass();
+                    placeGrass(2);
                 }
             }
 
