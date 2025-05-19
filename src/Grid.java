@@ -9,6 +9,7 @@ import java.util.Arrays;
 
 public class Grid {
     private Item[][] grid = new Item[30][40];
+    long time = System.currentTimeMillis();
 
     // generate random grid -> needs numbers from 1-9 randomly generated
     public Grid(){
@@ -123,13 +124,13 @@ public class Grid {
     public void UpdateGrid(){
         ArrayList<Integer> usedRow = new ArrayList<Integer>();
 
-        long time = System.currentTimeMillis();
         if (System.currentTimeMillis() - time == 500){
-            for (int x = grid[0].length - 2; x > 0; x--){
-                for (int y = grid.length - 2; y > 0; y--){
-                    grid[y+2][x] = grid[y][x];
-                }
+            time = System.currentTimeMillis();
+
+            for (int y = grid.length - 2; y > 0; y--){
+                grid[y+1] = grid[y];
             }
+
             // Two new generated rows
             for (int r = 0; r < 2; r++){
                 double probability = Math.random();
@@ -149,9 +150,10 @@ public class Grid {
             }
 
             // ADD VEHICLE MOVEMENTS_________
-        }
 
-        printMapping();
+            System.out.println();
+            printMapping();
+        }
     }
 
     private void printMapping(){
@@ -177,5 +179,9 @@ public class Grid {
             return false;
         }
         return true;
+    }
+
+    public void updatePlayerLoc(int x, int y){
+
     }
 }
