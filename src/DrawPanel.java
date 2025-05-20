@@ -13,6 +13,7 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
     private Grid grid;
     private boolean lost;
     private int score;
+    long time = System.currentTimeMillis();
 
     public DrawPanel() {
         lost = false;
@@ -25,7 +26,10 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
     }
 
     protected void paintComponent(Graphics g) {
-        grid.UpdateGrid();
+        if (System.currentTimeMillis() - time == 300) {
+            time = System.currentTimeMillis();
+            grid.updateGrid();
+        }
         if (!lost) {
 //            grid.UpdateGrid();
             super.paintComponent(g);

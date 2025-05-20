@@ -86,34 +86,31 @@ public class Grid {
         grid[row][col] = new Item(4, row * 30, col * 30);
     }
 
-    public void UpdateGrid(){
-        ArrayList<Integer> usedRow = new ArrayList<Integer>();
-
-        if (System.currentTimeMillis() - time == 300){
-            time = System.currentTimeMillis();
-
-            // Moving everything down two rows
-            for (int y = grid.length - 2; y >= 0; y--){
-                grid[y+1] = grid[y];
+    public void updateGrid(){
+        // Moving everything down a row
+        for (int r = grid.length - 2; r >= 0; r--){
+            for (int c = 0; c < grid[0].length; c++) {
+                grid[r + 1][c] = grid[r][c];
             }
-
-            double probability = Math.random();
-
-            if (probability < 0.7 && probability > 0.4) {
-                placeRoad(0);
-            } else if (probability < 0.85 && probability > 0.7) {
-                placeTracks(0);
-            } else if (probability > 0.85) {
-                placeWater(0);
-            } else {
-                placeGrass(0);
-            }
-
-            // ADD VEHICLE MOVEMENTS _________
-
-            System.out.println();
-            printMapping();
         }
+
+        double probability = Math.random();
+
+        if (probability < 0.7 && probability > 0.4) { // 41-69
+            placeRoad(0);
+        } else if (probability < 0.85 && probability > 0.7) { // 71-84
+            placeTracks(0);
+        } else if (probability > 0.85) { // 86
+            placeWater(0);
+        } else {
+            placeGrass(0);
+        }
+
+        // ADD VEHICLE MOVEMENTS _________
+
+        System.out.println();
+        printMapping();
+
     }
 
     private void printMapping(){
