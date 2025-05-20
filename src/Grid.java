@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class Grid {
     private Item[][] grid = new Item[30][40];
-    long time = System.currentTimeMillis();
+    public boolean train;
 
     // generate random grid -> needs numbers from 1-9 randomly generated
     public Grid(){
@@ -13,12 +13,26 @@ public class Grid {
 
             if (probability < 0.7 && probability > 0.4) {
                 placeRoad(counter);
+                for (int i = 0; i < 3; i++){
+                    placeCar(counter);
+                }
+                placeTruck(counter);
             } else if (probability < 0.85 && probability > 0.7) {
                 placeTracks(counter);
+                if (train){
+                    placeTrain(counter);
+                }
             } else if (probability > 0.85) {
                 placeWater(counter);
+                for (int i = 0; i < 3; i++){
+                    placeLog(counter);
+                }
             } else {
                 placeGrass(counter);
+                for (int i = 0; i < 5; i ++) {
+                    int col = 1 + (int) (Math.random() * 30);
+                    placeTrees(counter, col);
+                }
             }
         }
 
@@ -28,8 +42,8 @@ public class Grid {
 
     // need to edit this to place as many roads as I input for each section
     public void placeRoad(int row){
-        for (int j = 0; j < grid[0].length; j++) {
-            grid[row][j] = new Item(1, j * 30, row * 30);
+        for (int col = 0; col < grid[0].length; col++) {
+            grid[row][col] = new Item(1, col * 30, row * 30);
         }
     }
 
@@ -52,8 +66,8 @@ public class Grid {
     }
 
     public void placeWater(int row){
-        for (int j = 0; j < grid[0].length; j++) {
-            grid[row][j] = new Item(2, j * 30, row * 30);
+        for (int col = 0; col < grid[0].length; col++) {
+            grid[row][col] = new Item(2, col * 30, row * 30);
         }
     }
 
@@ -65,8 +79,8 @@ public class Grid {
     }
 
     public void placeTracks(int row){
-        for (int j = 0; j < grid[0].length; j++) {
-            grid[row][j] = new Item(3, j * 30, row * 30);
+        for (int col = 0; col < grid[0].length; col++) {
+            grid[row][col] = new Item(3, col * 30, row * 30);
         }
     }
 
@@ -77,8 +91,8 @@ public class Grid {
     }
 
     public void placeGrass(int row){
-        for (int j = 0; j < grid[0].length; j++) {
-            grid[row][j] = new Item(0, j * 30, row * 30);
+        for (int col = 0; col < grid[0].length; col++) {
+            grid[row][col] = new Item(0, col * 30, row * 30);
         }
     }
 
@@ -98,12 +112,26 @@ public class Grid {
 
         if (probability < 0.7 && probability > 0.4) { // 41-69
             placeRoad(0);
+            for (int i = 0; i < 3; i++){
+                placeCar(0);
+            }
+            placeTruck(0);
         } else if (probability < 0.85 && probability > 0.7) { // 71-84
             placeTracks(0);
+            if (train){
+                placeTrain(0);
+            }
         } else if (probability > 0.85) { // 86
             placeWater(0);
+            for (int i = 0; i < 3; i++){
+                placeLog(0);
+            }
         } else {
             placeGrass(0);
+            for (int i = 0; i < 5; i ++) {
+                int col = 1 + (int) (Math.random() * 30);
+                placeTrees(0, col);
+            }
         }
 
         // ADD VEHICLE MOVEMENTS _________
