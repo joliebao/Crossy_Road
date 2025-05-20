@@ -8,18 +8,13 @@ public class Grid {
 
     // generate random grid -> needs numbers from 1-9 randomly generated
     public Grid(){
-        // FLOORING: GRASS (0)
-
         for (int counter = 0; counter < grid.length; counter++) {
             double probability = Math.random();
 
-            // FLOORING: ROAD (1)
             if (probability < 0.7 && probability > 0.4) {
                 placeRoad(counter);
-            // FLOORING: TRAIN TRACKS (3)
             } else if (probability < 0.85 && probability > 0.7) {
                 placeTracks(counter);
-            // FLOORING: WATER (2)
             } else if (probability > 0.85) {
                 placeWater(counter);
             } else {
@@ -97,28 +92,24 @@ public class Grid {
         if (System.currentTimeMillis() - time == 300){
             time = System.currentTimeMillis();
 
+            // Moving everything down two rows
             for (int y = grid.length - 2; y >= 0; y--){
                 grid[y+1] = grid[y];
             }
 
-            // I have to refactor all this code so that I can generate two rows normally later
+            double probability = Math.random();
 
-            // Two new generated rows
-            for (int r = 0; r < 2; r++){
-                double probability = Math.random();
-
-                if (probability < 0.7 && probability > 0.4) {
-                    placeRoad(r);
-                } else if (probability < 0.85 && probability > 0.7) {
-                    placeTracks(r);
-                } else if (probability > 0.85) {
-                    placeWater(r);
-                } else {
-                    placeGrass(r);
-                }
+            if (probability < 0.7 && probability > 0.4) {
+                placeRoad(0);
+            } else if (probability < 0.85 && probability > 0.7) {
+                placeTracks(0);
+            } else if (probability > 0.85) {
+                placeWater(0);
+            } else {
+                placeGrass(0);
             }
 
-            // ADD VEHICLE MOVEMENTS_________
+            // ADD VEHICLE MOVEMENTS _________
 
             System.out.println();
             printMapping();
