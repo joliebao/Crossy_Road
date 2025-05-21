@@ -30,8 +30,8 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
             time = System.currentTimeMillis();
             grid.updateGrid();
         }
+
         if (!lost) {
-//            grid.UpdateGrid();
             super.paintComponent(g);
 
             g.setColor(Color.cyan);

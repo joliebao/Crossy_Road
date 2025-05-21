@@ -134,11 +134,27 @@ public class Grid {
             }
         }
 
-        // ADD VEHICLE MOVEMENTS _________
-
         System.out.println();
         printMapping();
+    }
 
+    public void moveVehicles(){
+        // VEHICLE MOVEMENTS
+        for (int r = 0; r < grid.length; r++){
+            for (int c = 0; c < grid[0].length; c++){
+                if (grid[r][c] instanceof Vehicle){
+                    int speed = ((Vehicle) grid[r][c]).getSpeed();
+                    int start = grid[r][c].getStart();
+                    int numAssociation = grid[r][c].getNumAssociation();
+                    if (r == start){
+                        grid[r][c+speed] = new Vehicle(numAssociation, start + speed, r);
+
+                        int numAssociationFloor = grid[r][start - 1].getNumAssociation();
+                        grid[r][c] = new Item(numAssociationFloor, c, r);
+                    }
+                }
+            }
+        }
     }
 
     private void printMapping(){

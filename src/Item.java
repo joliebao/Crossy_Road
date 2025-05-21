@@ -1,19 +1,19 @@
 public class Item {
     protected int numAssociation;
-    protected int x;
+    protected int start;
     protected int y;
 
     public Item (int num, int x, int y){
-        this.x = x;
+        start = x;
         this.y = y;
         numAssociation = num;
     }
 
-    public int start(){
-        return x;
+    public int getStart(){
+        return start;
     }
 
-    public int place(){
+    public int getY(){
         return y;
     }
 

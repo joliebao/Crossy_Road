@@ -2,8 +2,8 @@ public class Vehicle extends Item{
     private int size;
     private int speed;
 
-    public Vehicle (int num, int x, int y) {
-        super(num, x, y);
+    public Vehicle (int num, int start, int y) {
+        super(num, start, y);
 
         if (numAssociation == 5) { // car
             speed = 4;
@@ -20,12 +20,14 @@ public class Vehicle extends Item{
         }
     }
 
+    // To use the start number: All values of the numAssociation will have the same start number.
+    // The start number will be used for comparing the entire segment of the vehicle
+    // For example:
+    // 00022000
+    // Start would be 3; compare 4 to 3 and that is one vehicle
+    // idk if it will work (!)
     public int getSize(){
         return size;
-    }
-
-    public int end(){
-        return x+size;
     }
 
     public int getSpeed(){
