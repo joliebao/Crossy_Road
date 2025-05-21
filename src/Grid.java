@@ -158,8 +158,7 @@ public class Grid {
                     } else if (start + size < grid[0].length){
                         numAssociationFloor = grid[r][start + size].getNumAssociation();
                     }
-                    System.out.println(numAssociationFloor);
-                    grid[r][c] = new Item(numAssociationFloor + 1, c, r);
+                    grid[r][c] = new Item(numAssociationFloor, c + 1, r);
                 }
             }
         }
