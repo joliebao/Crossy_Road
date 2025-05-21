@@ -43,7 +43,7 @@ public class Grid {
     // need to edit this to place as many roads as I input for each section
     public void placeRoad(int row){
         for (int col = 0; col < grid[0].length; col++) {
-            grid[row][col] = new Item(1, col * 30, row * 30);
+            grid[row][col] = new Item(1, col, row);
         }
     }
 
@@ -51,7 +51,7 @@ public class Grid {
         for (int i = 0; i < 2; i++) {
             int locX = (int) (Math.random() * 30);
             for (int col = 0; col < 2; col++) {
-                grid[row][locX + col] = new Vehicle(5, col * 30, row * 30);
+                grid[row][locX + col] = new Vehicle(5, col, row);
             }
         }
     }
@@ -60,44 +60,44 @@ public class Grid {
         for (int i = 0; i < 2; i++) {
             int locX = (int) (Math.random() * 30);
             for (int col = 0; col < 2; col++) {
-                grid[row][locX + col] = new Vehicle(6, col * 30, row * 30);
+                grid[row][locX + col] = new Vehicle(6, col, row);
             }
         }
     }
 
     public void placeWater(int row){
         for (int col = 0; col < grid[0].length; col++) {
-            grid[row][col] = new Item(2, col * 30, row * 30);
+            grid[row][col] = new Item(2, col, row);
         }
     }
 
     public void placeLog(int row){
         int c = (int) (Math.random() * 32);
         for (int col = c; col < c + 5 + (int) (Math.random() * 2); col++) {
-            grid[row][col] = new Vehicle(7, col * 30, row * 30);
+            grid[row][col] = new Vehicle(8, col, row);
         }
     }
 
     public void placeTracks(int row){
         for (int col = 0; col < grid[0].length; col++) {
-            grid[row][col] = new Item(3, col * 30, row * 30);
+            grid[row][col] = new Item(3, col, row);
         }
     }
 
     public void placeTrain(int row){
         for (int col = 0; col < 40; col++) {
-            grid[row][col] = new Vehicle(7, col * 30, row * 30);
+            grid[row][col] = new Vehicle(7, col, row);
         }
     }
 
     public void placeGrass(int row){
         for (int col = 0; col < grid[0].length; col++) {
-            grid[row][col] = new Item(0, col * 30, row * 30);
+            grid[row][col] = new Item(0, col, row);
         }
     }
 
     public void placeTrees(int row, int col){
-        grid[row][col] = new Item(4, row * 30, col * 30);
+        grid[row][col] = new Item(4, row, col);
     }
 
     public void updateGrid(){
@@ -141,27 +141,31 @@ public class Grid {
     public void moveVehicles(){
         for (int r = 0; r < grid.length; r++){
             for (int c = 0; c < grid[0].length; c++){
-
                 if (grid[r][c] instanceof Vehicle){
                     int speed = ((Vehicle) grid[r][c]).getSpeed();
                     int start = grid[r][c].getStart();
+                    int size = ((Vehicle) grid[r][c]).getSize();
                     int numAssociation = grid[r][c].getNumAssociation();
 
                     if (c + speed < grid[0].length) {
-                        grid[r][c + speed] = new Vehicle(numAssociation, start + speed, r);
+                        grid[r][c + 1] = new Vehicle(numAssociation, start + 1, r);
                     }
 
+                    // some issue with the numAssociation being received,,,
                     int numAssociationFloor = 0;
                     if (start - 1 > 0) {
                         numAssociationFloor = grid[r][start - 1].getNumAssociation();
+                    } else if (start + size < grid[0].length){
+                        numAssociationFloor = grid[r][start + size].getNumAssociation();
                     }
-                    grid[r][c] = new Item(numAssociationFloor, c, r);
+                    System.out.println(numAssociationFloor);
+                    grid[r][c] = new Item(numAssociationFloor + 1, c, r);
                 }
             }
         }
 
-        System.out.println();
-        printMapping();
+//        System.out.println();
+//        printMapping();
     }
 
     private void printMapping(){
