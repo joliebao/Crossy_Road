@@ -29,6 +29,7 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
         if (System.currentTimeMillis() - time == 300) {
             time = System.currentTimeMillis();
             grid.updateGrid();
+            grid.moveVehicles();
         }
 
         if (!lost) {
