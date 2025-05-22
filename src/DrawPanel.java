@@ -13,7 +13,7 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
     private Grid grid;
     private boolean lost;
     private int score;
-    long time = System.currentTimeMillis();
+    private long time = System.currentTimeMillis();
 
     public DrawPanel() {
         lost = false;
@@ -30,7 +30,7 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
             time = System.currentTimeMillis();
             grid.moveVehicles();
             // need to find a way to combine both functions when the time is different (!)
-            grid.updateGrid();
+//            grid.updateGrid();
 
         }
 
