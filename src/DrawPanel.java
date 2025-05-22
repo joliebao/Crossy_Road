@@ -72,16 +72,18 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
     }
 
     public void movePlayer(String key){
-
         if (key.equals("a")){
             p.setX(-1);
-
+            grid.changePlayerLoc(true, -1, p.getX() + 1, p.getY());
         } else if (key.equals("w")){
             p.setY(-1);
+            grid.changePlayerLoc(false, -1, p.getX(), p.getY() + 1);
         } else if (key.equals("d")){
             p.setX(1);
+            grid.changePlayerLoc(true, 1, p.getX() - 1, p.getY());
         } else if (key.equals("s")){
             p.setY(1);
+            grid.changePlayerLoc(false, 1, p.getX(), p.getY() - 1);
         }
     }
 

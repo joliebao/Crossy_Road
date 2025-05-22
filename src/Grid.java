@@ -188,7 +188,9 @@ public class Grid {
         return true;
     }
 
-    public void movePlayer(boolean xChange, int changeBy, int x, int y){
+    public void changePlayerLoc(boolean xChange, int changeBy, int x, int y){
+        grid[y][x] = p;
+
         int numAssociation = -1;
         int i = 0;
         while (numAssociation == -1){
