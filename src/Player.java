@@ -1,9 +1,10 @@
-public class Player {
+public class Player extends Item{
     private int number;
     private int x;
     private int y;
 
     public Player(){
+        super(9, 18, 28);
         number = 9;
         x = 19;
         y = 28;

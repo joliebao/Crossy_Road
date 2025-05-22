@@ -6,6 +6,7 @@ public class Grid {
     private Item[][] grid = new Item[30][40];
     private boolean train;
     private long time = System.currentTimeMillis();
+    private Player p = new Player();
 
     // generate random grid -> needs numbers from 1-9 randomly generated
     public Grid(){
@@ -139,7 +140,6 @@ public class Grid {
                 }
             }
         }
-
         System.out.println();
         printMapping();
     }
@@ -188,7 +188,21 @@ public class Grid {
         return true;
     }
 
-    public void updatePlayerLoc(int x, int y){
+    public void movePlayer(boolean xChange, int changeBy, int x, int y){
+        int numAssociation = -1;
+        int i = 0;
+        while (numAssociation == -1){
+            if (!(grid[y][i] instanceof Vehicle)){
+                numAssociation = grid[y][i].getNumAssociation();
+            }
+            i ++;
+        }
+        grid[y][x] = new Item(numAssociation, x, y);
 
+        if (xChange){
+            grid[y][x + changeBy] = p;
+        } else {
+            grid[y + changeBy][x] = p;
+        }
     }
 }

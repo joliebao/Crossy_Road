@@ -28,9 +28,7 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
     protected void paintComponent(Graphics g) {
         if (System.currentTimeMillis() - time == 300) {
             time = System.currentTimeMillis();
-            // need to find a way to combine both functions when the time is different (!)
             grid.updateGrid();
-
         }
 
         if (!lost) {
@@ -74,8 +72,10 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
     }
 
     public void movePlayer(String key){
+
         if (key.equals("a")){
             p.setX(-1);
+
         } else if (key.equals("w")){
             p.setY(-1);
         } else if (key.equals("d")){
