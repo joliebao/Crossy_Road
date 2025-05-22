@@ -4,7 +4,8 @@ import java.util.Arrays;
 
 public class Grid {
     private Item[][] grid = new Item[30][40];
-    public boolean train;
+    private boolean train;
+    private long time = System.currentTimeMillis();
 
     // generate random grid -> needs numbers from 1-9 randomly generated
     public Grid(){
@@ -101,36 +102,41 @@ public class Grid {
     }
 
     public void updateGrid(){
-        // Moving everything down a row
-        for (int r = grid.length - 2; r >= 0; r--){
-            for (int c = 0; c < grid[0].length; c++) {
-                grid[r + 1][c] = grid[r][c];
-            }
-        }
+        moveVehicles();
 
-        double probability = Math.random();
+        if (System.currentTimeMillis() - time == 600) {
+            time = System.currentTimeMillis();
+            // Moving everything down a row
+            for (int r = grid.length - 2; r >= 0; r--) {
+                for (int c = 0; c < grid[0].length; c++) {
+                    grid[r + 1][c] = grid[r][c];
+                }
+            }
 
-        if (probability < 0.7 && probability > 0.4) { // 41-69
-            placeRoad(0);
-            for (int i = 0; i < 3; i++){
-                placeCar(0);
-            }
-            placeTruck(0);
-        } else if (probability < 0.85 && probability > 0.7) { // 71-84
-            placeTracks(0);
-            if (train){
-                placeTrain(0);
-            }
-        } else if (probability > 0.85) { // 86
-            placeWater(0);
-            for (int i = 0; i < 3; i++){
-                placeLog(0);
-            }
-        } else {
-            placeGrass(0);
-            for (int i = 0; i < 5; i ++) {
-                int col = 1 + (int) (Math.random() * 30);
-                placeTrees(0, col);
+            double probability = Math.random();
+
+            if (probability < 0.7 && probability > 0.4) { // 41-69
+                placeRoad(0);
+                for (int i = 0; i < 3; i++) {
+                    placeCar(0);
+                }
+                placeTruck(0);
+            } else if (probability < 0.85 && probability > 0.7) { // 71-84
+                placeTracks(0);
+                if (train) {
+                    placeTrain(0);
+                }
+            } else if (probability > 0.85) { // 86
+                placeWater(0);
+                for (int i = 0; i < 3; i++) {
+                    placeLog(0);
+                }
+            } else {
+                placeGrass(0);
+                for (int i = 0; i < 5; i++) {
+                    int col = 1 + (int) (Math.random() * 30);
+                    placeTrees(0, col);
+                }
             }
         }
 
@@ -143,12 +149,8 @@ public class Grid {
         for (int r = 0; r < grid.length; r++){
             for (int c = grid[0].length - 1; c > 0; c--){
                 if (grid[r][c] instanceof Vehicle){
-                    int speed = ((Vehicle) grid[r][c]).getSpeed();
                     int start = grid[r][c].getStart();
-//                    System.out.println("Start " + start);
-                    int size = ((Vehicle) grid[r][c]).getSize();
                     int numAssociation = grid[r][c].getNumAssociation();
-
 
                     // keeps only updating the start
                     if (c + 1 < grid[0].length) {
@@ -161,8 +163,6 @@ public class Grid {
                 }
             }
         }
-        System.out.println();
-        printMapping();
     }
 
     private void printMapping(){
