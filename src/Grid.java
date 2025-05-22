@@ -151,13 +151,11 @@ public class Grid {
 
 
                     // keeps only updating the start
-                    if (start + c + 1 < grid[0].length) {
+                    if (c + 1 < grid[0].length) {
                         grid[r][c + 1] = new Vehicle(numAssociation, start + 1, r);
                     }
+                    grid[r][c] = new Item(numAssociationFloor, c, r);
 
-                    if (c == start) {
-                        grid[r][c + 1] = new Item(numAssociationFloor, c + 1, r);
-                    }
                 } else {
                     numAssociationFloor = grid[r][c].getNumAssociation();
                 }
