@@ -39,7 +39,7 @@ public class Grid {
             }
         }
 
-        grid[26][20] = p;
+        grid[p.getY()][p.getX()] = p;
 
         System.out.println();
         printMapping();
@@ -145,13 +145,15 @@ public class Grid {
                 }
 
                 // Losing game by grid
+                changePlayerLoc(false, 1, p.getX(), p.getY());
                 p.setY(1);
                 if (p.getY() >= grid.length){
                     lost = true;
                 }
+                System.out.println(p.getX() + " " + p.getY());
             }
-            System.out.println();
-            printMapping();
+//            System.out.println();
+//            printMapping();
         }
     }
 
@@ -176,9 +178,25 @@ public class Grid {
         }
     }
 
-    private void printMapping(){
-        for (int rows = 0; rows < grid.length; rows ++){
-            System.out.println(Arrays.toString(grid[rows]));
+    public void changePlayerLoc(boolean xChange, int changeBy, int x, int y){
+        System.out.println(x + " " + y);
+
+        if (!lost) {
+            int numAssociation = -1;
+            int i = 0;
+            while (numAssociation == -1) {
+                if (!(grid[y][i] instanceof Vehicle)) {
+                    numAssociation = grid[y][i].getNumAssociation();
+                }
+                i++;
+            }
+            grid[y][x] = new Item(numAssociation, x, y);
+
+            if (xChange) {
+                grid[y][x + changeBy] = p;
+            } else {
+                grid[y + changeBy][x] = p;
+            }
         }
     }
 
@@ -199,25 +217,9 @@ public class Grid {
         return true;
     }
 
-    public void changePlayerLoc(boolean xChange, int changeBy, int x, int y){
-        if (!lost) {
-            grid[y][x] = p;
-
-            int numAssociation = -1;
-            int i = 0;
-            while (numAssociation == -1) {
-                if (!(grid[y][i] instanceof Vehicle)) {
-                    numAssociation = grid[y][i].getNumAssociation();
-                }
-                i++;
-            }
-            grid[y][x] = new Item(numAssociation, x, y);
-
-            if (xChange) {
-                grid[y][x + changeBy] = p;
-            } else {
-                grid[y + changeBy][x] = p;
-            }
+    private void printMapping(){
+        for (int rows = 0; rows < grid.length; rows ++){
+            System.out.println(Arrays.toString(grid[rows]));
         }
     }
 }
