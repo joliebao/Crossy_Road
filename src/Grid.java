@@ -38,6 +38,8 @@ public class Grid {
             }
         }
 
+        grid[26][20] = p;
+
         System.out.println();
         printMapping();
     }

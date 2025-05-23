@@ -6,8 +6,8 @@ public class Player extends Item{
     public Player(){
         super(9, 18, 28);
         number = 9;
-        x = 19;
-        y = 28;
+        x = 20;
+        y = 26;
     }
 
     public int getNum(){
