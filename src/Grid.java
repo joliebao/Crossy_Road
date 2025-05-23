@@ -202,7 +202,10 @@ public class Grid {
         int num = grid[r][c+1].getNumAssociation();
         if (num == 2){ // water
             return false;
-        } else if (num == 5){ // car
+        }
+
+        num = grid[r + 1][c].getNumAssociation();
+        if (num == 5){ // car
             return false;
         } else if (num == 6){ // truck
             return false;
