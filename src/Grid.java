@@ -38,9 +38,6 @@ public class Grid {
                 }
             }
         }
-
-        grid[p.getY()][p.getX()] = p;
-
         System.out.println();
         printMapping();
     }
@@ -152,8 +149,8 @@ public class Grid {
                 }
                 System.out.println(p.getX() + " " + p.getY());
             }
-//            System.out.println();
-//            printMapping();
+            System.out.println();
+            printMapping();
         }
     }
 
