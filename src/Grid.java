@@ -7,6 +7,7 @@ public class Grid {
     private boolean train;
     private long time = System.currentTimeMillis();
     private Player p = new Player();
+    private boolean lost;
 
     // generate random grid -> needs numbers from 1-9 randomly generated
     public Grid(){
@@ -105,45 +106,53 @@ public class Grid {
     }
 
     public void updateGrid(){
-        moveVehicles();
+        if (!lost) {
+            moveVehicles();
 
-        if (System.currentTimeMillis() - time == 600) {
-            time = System.currentTimeMillis();
-            // Moving everything down a row
-            for (int r = grid.length - 2; r >= 0; r--) {
-                for (int c = 0; c < grid[0].length; c++) {
-                    grid[r + 1][c] = grid[r][c];
+            if (System.currentTimeMillis() - time == 600) {
+                time = System.currentTimeMillis();
+                // Moving everything down a row
+                for (int r = grid.length - 2; r >= 0; r--) {
+                    for (int c = 0; c < grid[0].length; c++) {
+                        grid[r + 1][c] = grid[r][c];
+                    }
+                }
+
+                double probability = Math.random();
+
+                if (probability < 0.7 && probability > 0.4) { // 41-69
+                    placeRoad(0);
+                    for (int i = 0; i < 3; i++) {
+                        placeCar(0);
+                    }
+                    placeTruck(0);
+                } else if (probability < 0.85 && probability > 0.7) { // 71-84
+                    placeTracks(0);
+                    if (train) {
+                        placeTrain(0);
+                    }
+                } else if (probability > 0.85) { // 86
+                    placeWater(0);
+                    for (int i = 0; i < 3; i++) {
+                        placeLog(0);
+                    }
+                } else {
+                    placeGrass(0);
+                    for (int i = 0; i < 5; i++) {
+                        int col = 1 + (int) (Math.random() * 30);
+                        placeTrees(0, col);
+                    }
+                }
+
+                // Losing game by grid
+                p.setY(1);
+                if (p.getY() >= grid.length){
+                    lost = true;
                 }
             }
-
-            double probability = Math.random();
-
-            if (probability < 0.7 && probability > 0.4) { // 41-69
-                placeRoad(0);
-                for (int i = 0; i < 3; i++) {
-                    placeCar(0);
-                }
-                placeTruck(0);
-            } else if (probability < 0.85 && probability > 0.7) { // 71-84
-                placeTracks(0);
-                if (train) {
-                    placeTrain(0);
-                }
-            } else if (probability > 0.85) { // 86
-                placeWater(0);
-                for (int i = 0; i < 3; i++) {
-                    placeLog(0);
-                }
-            } else {
-                placeGrass(0);
-                for (int i = 0; i < 5; i++) {
-                    int col = 1 + (int) (Math.random() * 30);
-                    placeTrees(0, col);
-                }
-            }
+            System.out.println();
+            printMapping();
         }
-        System.out.println();
-        printMapping();
     }
 
     public void moveVehicles(){
@@ -191,22 +200,24 @@ public class Grid {
     }
 
     public void changePlayerLoc(boolean xChange, int changeBy, int x, int y){
-        grid[y][x] = p;
+        if (!lost) {
+            grid[y][x] = p;
 
-        int numAssociation = -1;
-        int i = 0;
-        while (numAssociation == -1){
-            if (!(grid[y][i] instanceof Vehicle)){
-                numAssociation = grid[y][i].getNumAssociation();
+            int numAssociation = -1;
+            int i = 0;
+            while (numAssociation == -1) {
+                if (!(grid[y][i] instanceof Vehicle)) {
+                    numAssociation = grid[y][i].getNumAssociation();
+                }
+                i++;
             }
-            i ++;
-        }
-        grid[y][x] = new Item(numAssociation, x, y);
+            grid[y][x] = new Item(numAssociation, x, y);
 
-        if (xChange){
-            grid[y][x + changeBy] = p;
-        } else {
-            grid[y + changeBy][x] = p;
+            if (xChange) {
+                grid[y][x + changeBy] = p;
+            } else {
+                grid[y + changeBy][x] = p;
+            }
         }
     }
 }
