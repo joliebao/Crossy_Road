@@ -27,7 +27,7 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
 
     protected void paintComponent(Graphics g) {
         if (!lost) {
-            lost = grid.isLost();
+            lost = grid.end();
             super.paintComponent(g);
 
             if (System.currentTimeMillis() - time == 500) {
@@ -120,8 +120,6 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
                 p.setY(1);
             }
         }
-
-        lost = !(grid.isSafe(p.getY(), p.getX()));
     }
 
     @Override

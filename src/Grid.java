@@ -54,6 +54,12 @@ public class Grid {
     public void placeCar(int row){
         for (int i = 0; i < 2; i++) {
             int locX = (int) (Math.random() * 30);
+
+            // avoid overlap
+            if (getNumAssociation(row, locX) != 1 && getNumAssociation(row, locX + 2) != 1){
+                locX = (int) (Math.random() * 30);
+            }
+
             for (int col = 0; col < 2; col++) {
                 grid[row][locX + col] = new Vehicle(5, locX, row);
             }
@@ -63,7 +69,13 @@ public class Grid {
     public void placeTruck(int row){
         for (int i = 0; i < 2; i++) {
             int locX = (int) (Math.random() * 30);
-            for (int col = 0; col < 2; col++) {
+
+            // avoid overlap
+            if (getNumAssociation(row, locX) != 1 && getNumAssociation(row, locX + 3) != 1){
+                locX = (int) (Math.random() * 30);
+            }
+
+            for (int col = 0; col < 3; col++) {
                 grid[row][locX + col] = new Vehicle(6, locX, row);
             }
         }
@@ -77,7 +89,13 @@ public class Grid {
 
     public void placeLog(int row){
         int c = (int) (Math.random() * 32);
-        for (int col = c; col < c + 5 + (int) (Math.random() * 2); col++) {
+
+        // avoid overlap
+        if (getNumAssociation(row, c) != 2 && getNumAssociation(row, c + 5) != 2){
+            c = (int) (Math.random() * 30);
+        }
+
+        for (int col = c; col < c + 5; col++) {
             grid[row][col] = new Vehicle(8, c, row);
         }
     }
@@ -146,13 +164,13 @@ public class Grid {
                 // Losing game by grid
                 changePlayerLoc(false, 1, p.getX(), p.getY());
                 p.setY(1);
-                if (p.getY() >= grid.length){
-                    lost = true;
-                }
-                System.out.println(p.getX() + " " + p.getY());
             }
             System.out.println();
             printMapping();
+
+            if (p.getY() >= grid.length){
+                lost = true;
+            }
         }
     }
 
@@ -237,7 +255,7 @@ public class Grid {
         return grid[r][c].getNumAssociation();
     }
 
-    public boolean isLost(){
+    public boolean end(){
         return lost;
     }
 }
