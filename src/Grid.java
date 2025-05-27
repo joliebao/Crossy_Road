@@ -222,4 +222,16 @@ public class Grid {
             System.out.println(Arrays.toString(grid[rows]));
         }
     }
+
+    public int getRLength(){
+        return grid.length;
+    }
+
+    public int getCLength(){
+        return grid[0].length;
+    }
+
+    public int getNumAssociation(int r, int c){
+        return grid[r][c].getNumAssociation();
+    }
 }

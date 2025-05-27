@@ -34,8 +34,42 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
         if (!lost) {
             super.paintComponent(g);
 
-            g.setColor(Color.cyan);
-            g.fillRect(p.getX() * 30, p.getY() * 30, 30, 30);
+            for (int r = 0; r < grid.getRLength(); r++){
+                for (int c = 0; c < grid.getCLength(); c++){
+                    if (grid.getNumAssociation(r,c) == 0){
+                        g.setColor(Color.green);
+                        g.fillRect(c * 30, r * 30, 30, 30);
+                    } else if (grid.getNumAssociation(r,c) == 1) {
+                        g.setColor(Color.gray);
+                        g.fillRect(c * 30, r * 30, 30, 30);
+                    } else if (grid.getNumAssociation(r,c) == 2) {
+                        g.setColor(Color.blue);
+                        g.fillRect(c * 30, r * 30, 30, 30);
+                    } else if (grid.getNumAssociation(r,c) == 3) {
+                        g.setColor(Color.lightGray);
+                        g.fillRect(c * 30, r * 30, 30, 30);
+                    } else if (grid.getNumAssociation(r,c) == 4) {
+                        g.setColor(Color.getHSBColor(12, 100, 28));
+                        g.fillRect(c * 30, r * 30, 30, 30);
+                    } else if (grid.getNumAssociation(r,c) == 5) {
+                        g.setColor(Color.red);
+                        g.fillRect(c * 30, r * 30, 30, 30);
+                    } else if (grid.getNumAssociation(r,c) == 6) {
+                        g.setColor(Color.magenta);
+                        g.fillRect(c * 30, r * 30, 30, 30);
+                    } else if (grid.getNumAssociation(r,c) == 7) {
+                        g.setColor(Color.white);
+                        g.fillRect(c * 30, r * 30, 30, 30);
+                    } else if (grid.getNumAssociation(r,c) == 8) {
+                        g.setColor(Color.getHSBColor(8, 88, 18));
+                        g.fillRect(c * 30, r * 30, 30, 30);
+                    } else if (grid.getNumAssociation(r,c) == 9) {
+                        g.setColor(Color.cyan);
+                        g.fillRect(p.getX() * 30, p.getY() * 30, 30, 30);
+                    }
+                }
+            }
+
             g.setColor(Color.black);
 
 
