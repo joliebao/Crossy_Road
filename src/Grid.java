@@ -37,6 +37,8 @@ public class Grid {
                     placeTrees(counter, col);
                 }
             }
+
+            grid[p.getY()][p.getX()] = p;
         }
         System.out.println();
         printMapping();
@@ -106,7 +108,7 @@ public class Grid {
         if (!lost) {
             moveVehicles();
 
-            if (System.currentTimeMillis() - time == 600) {
+            if (System.currentTimeMillis() - time == 500) {
                 time = System.currentTimeMillis();
                 // Moving everything down a row
                 for (int r = grid.length - 2; r >= 0; r--) {

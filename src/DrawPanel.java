@@ -26,13 +26,13 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
     }
 
     protected void paintComponent(Graphics g) {
-        if (System.currentTimeMillis() - time == 100) {
-            time = System.currentTimeMillis();
-            grid.updateGrid();
-        }
-
         if (!lost) {
             super.paintComponent(g);
+
+            if (System.currentTimeMillis() - time == 500) {
+                time = System.currentTimeMillis();
+                grid.updateGrid();
+            }
 
             for (int r = 0; r < grid.getRLength(); r++){
                 for (int c = 0; c < grid.getCLength(); c++){
@@ -69,9 +69,7 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
                     }
                 }
             }
-
             g.setColor(Color.black);
-
 
             Graphics2D g2 = (Graphics2D) g;
 
