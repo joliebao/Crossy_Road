@@ -27,6 +27,7 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
 
     protected void paintComponent(Graphics g) {
         if (!lost) {
+            lost = grid.isLost();
             super.paintComponent(g);
 
             if (System.currentTimeMillis() - time == 500) {
@@ -104,18 +105,20 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
     }
 
     public void movePlayer(String key){
-        if (key.equals("a")){
-            grid.changePlayerLoc(true, -1, p.getX(), p.getY());
-            p.setX(-1);
-        } else if (key.equals("w")){
-            grid.changePlayerLoc(false, -1, p.getX(), p.getY());
-            p.setY(-1);
-        } else if (key.equals("d")){
-            grid.changePlayerLoc(true, 1, p.getX(), p.getY());
-            p.setX(1);
-        } else if (key.equals("s")){
-            grid.changePlayerLoc(false, 1, p.getX(), p.getY());
-            p.setY(1);
+        if (!lost) {
+            if (key.equals("a")) {
+                grid.changePlayerLoc(true, -1, p.getX(), p.getY());
+                p.setX(-1);
+            } else if (key.equals("w")) {
+                grid.changePlayerLoc(false, -1, p.getX(), p.getY());
+                p.setY(-1);
+            } else if (key.equals("d")) {
+                grid.changePlayerLoc(true, 1, p.getX(), p.getY());
+                p.setX(1);
+            } else if (key.equals("s")) {
+                grid.changePlayerLoc(false, 1, p.getX(), p.getY());
+                p.setY(1);
+            }
         }
 
         lost = !(grid.isSafe(p.getY(), p.getX()));

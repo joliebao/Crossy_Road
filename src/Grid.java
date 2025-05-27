@@ -236,4 +236,8 @@ public class Grid {
     public int getNumAssociation(int r, int c){
         return grid[r][c].getNumAssociation();
     }
+
+    public boolean isLost(){
+        return lost;
+    }
 }
