@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class Grid {
     private Item[][] grid = new Item[30][40];
-    private boolean train;
+    private boolean train; // GET BACK TO THIS!!!
     private long time = System.currentTimeMillis();
     private Player p = new Player();
     private boolean lost;
@@ -196,8 +196,6 @@ public class Grid {
     }
 
     public void changePlayerLoc(boolean xChange, int changeBy, int x, int y){
-        System.out.println(x + " " + y);
-
         if (!lost) {
             int numAssociation = -1;
             int i = 0;
@@ -219,19 +217,23 @@ public class Grid {
 
     // NEED TO FINISH THIS AND APPLY TO EVERYTHING
     public boolean isSafe(int r, int c){
-        int num = grid[r][c+1].getNumAssociation();
-        if (num == 2){ // water
+        int behindX = grid[r][c-1].getNumAssociation();
+        int on = grid[r][c].getNumAssociation();
+        int aheadX = grid[r][c+1].getNumAssociation();
+        int aheadY = grid[r + 1][c].getNumAssociation();
+        if (on == 5 || behindX == 5){ // car
             return false;
         }
-
-        num = grid[r + 1][c].getNumAssociation();
-        if (num == 5){ // car
+        if (on == 6 || behindX == 6){ // truck
             return false;
-        } else if (num == 6){ // truck
+        }
+        if (aheadY == 7){ // train
             return false;
-        } else if (num == 7){ // train
+        }
+        if (on == 4){ // tree
             return false;
-        } else if (num == 4){ // tree
+        }
+        if (on == 2){ // water
             return false;
         }
         return true;
@@ -253,9 +255,5 @@ public class Grid {
 
     public int getNumAssociation(int r, int c){
         return grid[r][c].getNumAssociation();
-    }
-
-    public boolean end(){
-        return lost;
     }
 }

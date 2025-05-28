@@ -8,7 +8,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class DrawPanel extends JPanel implements MouseListener, KeyListener {
-    private boolean placed;
+    private boolean startGame;
     private Player p;
     private Grid grid;
     private boolean lost;
@@ -16,7 +16,6 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
     private long time = System.currentTimeMillis();
 
     public DrawPanel() {
-        lost = false;
         p = new Player();
         grid = new Grid();
         this.addMouseListener(this);
@@ -27,10 +26,12 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
 
     protected void paintComponent(Graphics g) {
         if (!lost) {
-            lost = grid.end();
             super.paintComponent(g);
+            lost = lose();
+            lost = !(grid.isSafe(p.getY(),p.getX()));
+            System.out.println(lost);
 
-            if (System.currentTimeMillis() - time == 500) {
+            if (System.currentTimeMillis() - time == 500 && startGame) {
                 time = System.currentTimeMillis();
                 grid.updateGrid();
             }
@@ -85,7 +86,6 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
                 }
                 y += 30;
             }
-            lost = lose();
         } else {
             Font font = new Font("Georgia", Font.BOLD, 100);
             g.setFont(font);
@@ -124,6 +124,7 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
+        startGame = true;
         String key = String.valueOf(e.getKeyChar());
         movePlayer(key);
 
