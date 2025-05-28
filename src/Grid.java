@@ -216,24 +216,28 @@ public class Grid {
     }
 
     // NEED TO FINISH THIS AND APPLY TO EVERYTHING
-    public boolean isSafe(int r, int c){
+    public boolean isSafe(int r, int c, String key){
+        System.out.println(key);
+        if (p.getY() >= 30){
+            return false;
+        } else if (p.getX() >= 40){
+            return false;
+        } else if (p.getX() <= 0){
+            return false;
+        }
+
         int behindX = grid[r][c-1].getNumAssociation();
-        int on = grid[r][c].getNumAssociation();
         int aheadX = grid[r][c+1].getNumAssociation();
         int aheadY = grid[r + 1][c].getNumAssociation();
-        if (on == 5 || behindX == 5){ // car
+        if (aheadY == 5 && key.equals("w") || behindX == 5){ // car
             return false;
-        }
-        if (on == 6 || behindX == 6){ // truck
+        } else if (aheadY == 6 && key.equals("w") || behindX == 6){ // truck
             return false;
-        }
-        if (aheadY == 7){ // train
+        } else if (aheadY == 7 && key.equals("w")){ // train
             return false;
-        }
-        if (on == 4){ // tree
+        } else if (aheadY == 4 && key.equals("w") || aheadX == 4 && key.equals("d") || behindX == 4 && key.equals("a")){ // tree
             return false;
-        }
-        if (on == 2){ // water
+        } else if (aheadY == 2 && key.equals("w")) { // water
             return false;
         }
         return true;

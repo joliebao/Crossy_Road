@@ -27,8 +27,6 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
     protected void paintComponent(Graphics g) {
         if (!lost) {
             super.paintComponent(g);
-            lost = lose();
-            lost = !(grid.isSafe(p.getY(),p.getX()));
             System.out.println(lost);
 
             if (System.currentTimeMillis() - time == 500 && startGame) {
@@ -93,17 +91,6 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
         }
     }
 
-    public boolean lose(){
-        if (p.getY() > 29){
-            return true;
-        } else if (p.getX() > 39){
-            return true;
-        } else if (p.getX() < 0){
-            return true;
-        }
-        return false;
-    }
-
     public void movePlayer(String key){
         if (!lost) {
             if (key.equals("a")) {
@@ -127,10 +114,11 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
         startGame = true;
         String key = String.valueOf(e.getKeyChar());
         movePlayer(key);
+        lost = !(grid.isSafe(p.getY(),p.getX(), key));
 
-        if (key.equals("W")){
+        if (key.equals("w")){
             score++;
-        } else if (key.equals("S")){
+        } else if (key.equals("s")){
             score--;
         }
     }
