@@ -14,7 +14,8 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
     private boolean lost;
     private int score;
     private static String key;
-    private long time = System.currentTimeMillis();
+    private long time;
+    private boolean once = true;
 
     public DrawPanel() {
         p = new Player();
@@ -29,6 +30,13 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
         if (!lost) {
             lost = !(grid.isSafe(p.getX(), p.getY(), key, startGame));
             super.paintComponent(g);
+
+            System.out.println(time);
+
+            if (startGame && once){ // need to make this happen once
+                time = System.currentTimeMillis();
+                once = false;
+            }
 
             if (System.currentTimeMillis() - time == 500) {
                 time = System.currentTimeMillis();
