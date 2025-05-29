@@ -13,6 +13,7 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
     private Grid grid;
     private boolean lost;
     private int score;
+    private static String key;
     private long time = System.currentTimeMillis();
 
     public DrawPanel() {
@@ -26,10 +27,11 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
 
     protected void paintComponent(Graphics g) {
         if (!lost) {
+            lost = !(grid.isSafe(p.getX(), p.getY(), key));
             super.paintComponent(g);
-            System.out.println(lost);
 
             if (System.currentTimeMillis() - time == 500 && startGame) {
+                System.out.println(lost);
                 time = System.currentTimeMillis();
                 grid.updateGrid();
             }
@@ -87,6 +89,7 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
         } else {
             Font font = new Font("Georgia", Font.BOLD, 100);
             g.setFont(font);
+            g.setColor(Color.black);
             g.drawString("YOU LOST!", 315, 450);
         }
     }
@@ -112,9 +115,8 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
     @Override
     public void keyTyped(KeyEvent e) {
         startGame = true;
-        String key = String.valueOf(e.getKeyChar());
+        key = String.valueOf(e.getKeyChar());
         movePlayer(key);
-        lost = !(grid.isSafe(p.getY(),p.getX(), key));
 
         if (key.equals("w")){
             score++;

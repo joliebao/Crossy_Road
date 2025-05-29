@@ -216,32 +216,43 @@ public class Grid {
     }
 
     // NEED TO FINISH THIS AND APPLY TO EVERYTHING
-    public boolean isSafe(int r, int c, String key){
-        System.out.println(key);
-        if (p.getY() >= 30){
+    public boolean isSafe(int x, int y, String key){
+        // player bounds
+        if (y >= 30){
             return false;
-        } else if (p.getX() >= 40){
+        } else if (x >= 40){
             return false;
-        } else if (p.getX() <= 0){
+        } else if (x <= 0){
             return false;
         }
 
-        int behindX = grid[r][c-1].getNumAssociation();
-        int aheadX = grid[r][c+1].getNumAssociation();
-        int aheadY = grid[r + 1][c].getNumAssociation();
-        if (aheadY == 5 && key.equals("w") || behindX == 5){ // car
+        // collisions
+        int behindX = grid[y][x - 1].getNumAssociation();
+        int aheadX = grid[y][x + 1].getNumAssociation();
+        int aheadY = grid[y - 1][x].getNumAssociation();
+        int behindY = grid[y + 1][x].getNumAssociation();
+
+        if (aheadY == 2) { // water
             return false;
-        } else if (aheadY == 6 && key.equals("w") || behindX == 6){ // truck
+        }
+
+        if (behindX == 5 || aheadY == 5 && key.equals("w")){ // car
+            System.out.println("----");
+            return false;
+        } else if (behindX == 6 || aheadY == 6 && key.equals("w")){ // truck
+            System.out.println("++++");
             return false;
         } else if (aheadY == 7 && key.equals("w")){ // train
+            System.out.println("////");
             return false;
-        } else if (aheadY == 4 && key.equals("w") || aheadX == 4 && key.equals("d") || behindX == 4 && key.equals("a")){ // tree
-            return false;
-        } else if (aheadY == 2 && key.equals("w")) { // water
+        } else if (aheadY == 4 && key.equals("w") || aheadX == 4 && key.equals("d") || behindX == 4 && key.equals("a") || behindY == 4 && key.equals("s")){ // tree
+            System.out.println("****");
             return false;
         }
         return true;
     }
+
+    // Need to save the type of item before it is changed to the player!
 
     private void printMapping(){
         for (int rows = 0; rows < grid.length; rows ++){
