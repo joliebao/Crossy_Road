@@ -27,11 +27,10 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
 
     protected void paintComponent(Graphics g) {
         if (!lost) {
-            lost = !(grid.isSafe(p.getX(), p.getY(), key));
+            lost = !(grid.isSafe(p.getX(), p.getY(), key, startGame));
             super.paintComponent(g);
 
-            if (System.currentTimeMillis() - time == 500 && startGame) {
-                System.out.println(lost);
+            if (System.currentTimeMillis() - time == 500) {
                 time = System.currentTimeMillis();
                 grid.updateGrid();
             }

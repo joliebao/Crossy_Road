@@ -91,7 +91,7 @@ public class Grid {
         int c = (int) (Math.random() * 32);
 
         // avoid overlap
-        if (getNumAssociation(row, c) != 2 && getNumAssociation(row, c + 5) != 2){
+        if (getNumAssociation(row, c) != 2 && getNumAssociation(row, c + 6) != 2){
             c = (int) (Math.random() * 30);
         }
 
@@ -215,39 +215,36 @@ public class Grid {
         }
     }
 
-    // NEED TO FINISH THIS AND APPLY TO EVERYTHING
-    public boolean isSafe(int x, int y, String key){
-        // player bounds
-        if (y >= 30){
-            return false;
-        } else if (x >= 40){
-            return false;
-        } else if (x <= 0){
-            return false;
-        }
+    public boolean isSafe(int x, int y, String key, boolean start){
+        if (start) {
+            // player bounds
+            if (y >= 30) {
+                return false;
+            } else if (x >= 40) {
+                return false;
+            } else if (x <= 0) {
+                return false;
+            }
 
-        // collisions
-        int behindX = grid[y][x - 1].getNumAssociation();
-        int aheadX = grid[y][x + 1].getNumAssociation();
-        int aheadY = grid[y - 1][x].getNumAssociation();
-        int behindY = grid[y + 1][x].getNumAssociation();
+            // collisions
+            int behindX = grid[y][x - 1].getNumAssociation();
+            int aheadX = grid[y][x + 1].getNumAssociation();
+            int aheadY = grid[y - 1][x].getNumAssociation();
+            int behindY = grid[y + 1][x].getNumAssociation();
 
-        if (aheadY == 2) { // water
-            return false;
-        }
+            if (aheadY == 2) { // water
+                return false;
+            }
 
-        if (behindX == 5 || aheadY == 5 && key.equals("w")){ // car
-            System.out.println("----");
-            return false;
-        } else if (behindX == 6 || aheadY == 6 && key.equals("w")){ // truck
-            System.out.println("++++");
-            return false;
-        } else if (aheadY == 7 && key.equals("w")){ // train
-            System.out.println("////");
-            return false;
-        } else if (aheadY == 4 && key.equals("w") || aheadX == 4 && key.equals("d") || behindX == 4 && key.equals("a") || behindY == 4 && key.equals("s")){ // tree
-            System.out.println("****");
-            return false;
+            if (behindX == 5 || aheadY == 5 && key.equals("w")) { // car
+                return false;
+            } else if (behindX == 6 || aheadY == 6 && key.equals("w")) { // truck
+                return false;
+            } else if (aheadY == 7 && key.equals("w")) { // train
+                return false;
+            } else if (aheadY == 4 && key.equals("w") || aheadX == 4 && key.equals("d") || behindX == 4 && key.equals("a") || behindY == 4 && key.equals("s")) { // tree
+                return false;
+            }
         }
         return true;
     }
