@@ -8,7 +8,7 @@ public class Grid {
     private long time = System.currentTimeMillis();
     private Player p = new Player();
     private boolean lost;
-    private static int[] surroundings = new int[4];
+    private static Item[] surroundings = new Item[4];
     private static int count = 0;
     private boolean change;
 
@@ -237,11 +237,15 @@ public class Grid {
         }
 
         if (change) {
-            surroundings[0] = grid[p.getY()][p.getX() - 1].getNumAssociation();
-            surroundings[1] = grid[p.getY()][p.getX() + 1].getNumAssociation();
-            surroundings[2] = grid[p.getY() - 1][p.getX()].getNumAssociation();
-            surroundings[3] = grid[p.getY() + 1][p.getX()].getNumAssociation();
+            surroundings[0] = grid[p.getY()][p.getX() - 1];
+            surroundings[1] = grid[p.getY()][p.getX() + 1];
+            surroundings[2] = grid[p.getY() - 1][p.getX()];
+            surroundings[3] = grid[p.getY() + 1][p.getX()];
             change = false;
+        }
+
+        for (int i = 0; i < surroundings.length; i++){
+            System.out.println(surroundings[i]);
         }
 
         count++;
@@ -249,17 +253,18 @@ public class Grid {
         if (count == 2){
             change = true;
             for (int i = 0; i < 4; i++){
-                if (surroundings[i] == 2 && x == ){
-
-                } else if (surroundings[i] == 5 && ){
-
-                } else if (surroundings[i] == 6 && ){
-
-                } else if (surroundings[i] == 4 && ){
-
+                if (surroundings[i].getY() == y && surroundings[i].getX() == x) {
+                    if (surroundings[i].getNumAssociation() == 2) {
+                        return false;
+                    } else if (surroundings[i].getNumAssociation() == 5){
+                        return false;
+                    } else if (surroundings[i].getNumAssociation() == 6) {
+                        return false;
+                    } else if (surroundings[i].getNumAssociation() == 4) {
+                        return false;
+                    }
                 }
             }
-            // fill with collision detection
         }
 
         return true;
