@@ -8,6 +8,9 @@ public class Grid {
     private long time = System.currentTimeMillis();
     private Player p = new Player();
     private boolean lost;
+    private static int[] surroundings = new int[4];
+    private static int count = 0;
+    private boolean change;
 
     // generate random grid -> needs numbers from 1-9 randomly generated
     public Grid(){
@@ -177,8 +180,11 @@ public class Grid {
     public void moveVehicles(){
         int numAssociationFloor = 0;
         for (int r = 0; r < grid.length; r++){
+            int counter = 0;
+            int often = (int) (Math.random() * 4) + 5;
             for (int c = grid[0].length - 1; c > 0; c--){
                 if (grid[r][c] instanceof Vehicle){
+                    counter ++;
                     int start = grid[r][c].getStart();
                     int numAssociation = grid[r][c].getNumAssociation();
 
@@ -188,6 +194,9 @@ public class Grid {
                     }
                     grid[r][c] = new Item(numAssociationFloor, c, r);
 
+                    if (often == counter){
+                        grid[r][c + 1] = new Vehicle(numAssociation, 0, r);
+                    }
                 } else {
                     numAssociationFloor = grid[r][c].getNumAssociation();
                 }
@@ -197,7 +206,7 @@ public class Grid {
 
     public void changePlayerLoc(boolean xChange, int changeBy, int x, int y){
         if (!lost) {
-            int numAssociation = -1;
+            int numAssociation = -1;    // set to a non-game value
             int i = 0;
             while (numAssociation == -1) {
                 if (!(grid[y][i] instanceof Vehicle)) {
@@ -225,27 +234,34 @@ public class Grid {
             } else if (x <= 0) {
                 return false;
             }
-
-            // collisions
-            int behindX = grid[y][x - 1].getNumAssociation();
-            int aheadX = grid[y][x + 1].getNumAssociation();
-            int aheadY = grid[y - 1][x].getNumAssociation();
-            int behindY = grid[y + 1][x].getNumAssociation();
-
-            if (aheadY == 2) { // water
-                return false;
-            }
-
-            if (behindX == 5 || aheadY == 5 && key.equals("w")) { // car
-                return false;
-            } else if (behindX == 6 || aheadY == 6 && key.equals("w")) { // truck
-                return false;
-            } else if (aheadY == 7 && key.equals("w")) { // train
-                return false;
-            } else if (aheadY == 4 && key.equals("w") || aheadX == 4 && key.equals("d") || behindX == 4 && key.equals("a") || behindY == 4 && key.equals("s")) { // tree
-                return false;
-            }
         }
+
+        if (change) {
+            surroundings[0] = grid[p.getY()][p.getX() - 1].getNumAssociation();
+            surroundings[1] = grid[p.getY()][p.getX() + 1].getNumAssociation();
+            surroundings[2] = grid[p.getY() - 1][p.getX()].getNumAssociation();
+            surroundings[3] = grid[p.getY() + 1][p.getX()].getNumAssociation();
+            change = false;
+        }
+
+        count++;
+
+        if (count == 2){
+            change = true;
+            for (int i = 0; i < 4; i++){
+                if (surroundings[i] == 2 && x == ){
+
+                } else if (surroundings[i] == 5 && ){
+
+                } else if (surroundings[i] == 6 && ){
+
+                } else if (surroundings[i] == 4 && ){
+
+                }
+            }
+            // fill with collision detection
+        }
+
         return true;
     }
 
