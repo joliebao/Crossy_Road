@@ -163,11 +163,12 @@ public class Grid {
             // Losing game by grid
             changePlayerLoc(false, 1, p.getX(), p.getY());
             p.setY(1);
-        }
-        System.out.println();
-        printMapping();
 
-        if (p.getY() >= grid.length){
+            System.out.println();
+            printMapping();
+        }
+
+        if (p.getY() >= 29){
             lost = true;
         }
     }
@@ -200,18 +201,18 @@ public class Grid {
     }
 
     public void changePlayerLoc(boolean xChange, int changeBy, int x, int y){
-        if (!lost) {
-            int numAssociation = -1;    // set to a non-game value
-            int i = 0;
-            while (numAssociation == -1) {
-                if (!(grid[y][i] instanceof Vehicle)) {
-                    numAssociation = grid[y][i].getNumAssociation();
-                }
-                i++;
+        int numAssociation = -1;    // set to a non-game value
+        int i = 0;
+        while (numAssociation == -1) {
+            if (!(grid[y][i] instanceof Vehicle)) {
+                numAssociation = grid[y][i].getNumAssociation();
             }
-            System.out.println(grid[x][y]);
-            grid[y][x] = new Item(numAssociation, x, y);
+            i++;
+        }
+//        System.out.println(grid[x][y]);
+        grid[y][x] = new Item(numAssociation, x, y);
 
+        if (!lost) {
             if (xChange) {
                 grid[y][x + changeBy] = p;
             } else {
@@ -268,7 +269,7 @@ public class Grid {
             }
             i ++;
         }
-        return true;
+        return !lost;
     }
 
     // Need to save the type of item before it is changed to the player!
