@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class Grid {
     private Item[][] grid = new Item[30][40];
     private boolean train; // GET BACK TO THIS!!!
-    private Player p = new Player();
+    private final Player p = new Player();
     private boolean lost;
     private static Item[] surroundings = new Item[8];
     private static int count = 0;
@@ -209,7 +209,9 @@ public class Grid {
             }
             i++;
         }
+        System.out.println(grid[y][x]);
         grid[y][x] = new Item(numAssociation, x, y);
+        System.out.println(grid[y][x]);
 
         if (!lost) {
             if (xChange) {
