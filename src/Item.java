@@ -29,6 +29,9 @@ public class Item {
 
     @Override
     public String toString() {
+        if(numAssociation == 9){
+            return "*";
+        }
         return numAssociation + "";
     }
 }

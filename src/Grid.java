@@ -204,21 +204,24 @@ public class Grid {
         int numAssociation = -1;    // set to a non-game value
         int i = 0;
         while (numAssociation == -1) {
-            if (!(grid[y][i] instanceof Vehicle)) {
+            if (!(grid[y][i] instanceof Player)) {
                 numAssociation = grid[y][i].getNumAssociation();
             }
             i++;
         }
-//        System.out.println(grid[x][y]);
         grid[y][x] = new Item(numAssociation, x, y);
 
         if (!lost) {
             if (xChange) {
                 grid[y][x + changeBy] = p;
+                p.setX(changeBy);
             } else {
                 grid[y + changeBy][x] = p;
+                p.setY(changeBy);
             }
         }
+
+        System.out.println(p.getX() + " " + p.getY());
     }
 
     public boolean isSafe(int x, int y, String key, boolean start){
@@ -273,7 +276,6 @@ public class Grid {
     }
 
     // Need to save the type of item before it is changed to the player!
-
     private void printMapping(){
         for (int rows = 0; rows < grid.length; rows ++){
             System.out.println(Arrays.toString(grid[rows]));

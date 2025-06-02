@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class DrawPanel extends JPanel implements MouseListener, KeyListener {
     private boolean startGame;
-    private Player p;
+    private Player p = new Player();;
     private Grid grid;
     private boolean lost;
     private int score;
@@ -18,7 +18,6 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
     private boolean once = true;
 
     public DrawPanel() {
-        p = new Player();
         grid = new Grid();
         this.addMouseListener(this);
         this.addKeyListener(this);
@@ -103,16 +102,12 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
         if (!lost) {
             if (key.equals("a")) {
                 grid.changePlayerLoc(true, -1, p.getX(), p.getY());
-                p.setX(-1);
             } else if (key.equals("w")) {
                 grid.changePlayerLoc(false, -1, p.getX(), p.getY());
-                p.setY(-1);
             } else if (key.equals("d")) {
                 grid.changePlayerLoc(true, 1, p.getX(), p.getY());
-                p.setX(1);
             } else if (key.equals("s")) {
                 grid.changePlayerLoc(false, 1, p.getX(), p.getY());
-                p.setY(1);
             }
         }
     }
