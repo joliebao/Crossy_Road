@@ -5,12 +5,10 @@ import java.util.Arrays;
 public class Grid {
     private Item[][] grid = new Item[30][40];
     private boolean train; // GET BACK TO THIS!!!
-    private long time = System.currentTimeMillis();
     private Player p = new Player();
     private boolean lost;
-    private static Item[] surroundings = new Item[4];
+    private static Item[] surroundings = new Item[8];
     private static int count = 0;
-    private boolean change;
 
     // generate random grid -> needs numbers from 1-9 randomly generated
     public Grid(){
@@ -129,51 +127,48 @@ public class Grid {
         if (!lost) {
             moveVehicles();
 
-            if (System.currentTimeMillis() - time == 500) {
-                time = System.currentTimeMillis();
-                // Moving everything down a row
-                for (int r = grid.length - 2; r >= 0; r--) {
-                    for (int c = 0; c < grid[0].length; c++) {
-                        grid[r + 1][c] = grid[r][c];
-                    }
+            // Moving everything down a row
+            for (int r = grid.length - 2; r >= 0; r--) {
+                for (int c = 0; c < grid[0].length; c++) {
+                    grid[r + 1][c] = grid[r][c];
                 }
+            }
 
-                double probability = Math.random();
+            double probability = Math.random();
 
-                if (probability < 0.7 && probability > 0.4) { // 41-69
-                    placeRoad(0);
-                    for (int i = 0; i < 3; i++) {
-                        placeCar(0);
-                    }
-                    placeTruck(0);
-                } else if (probability < 0.85 && probability > 0.7) { // 71-84
-                    placeTracks(0);
-                    if (train) {
-                        placeTrain(0);
-                    }
-                } else if (probability > 0.85) { // 86
-                    placeWater(0);
-                    for (int i = 0; i < 3; i++) {
-                        placeLog(0);
-                    }
-                } else {
-                    placeGrass(0);
-                    for (int i = 0; i < 5; i++) {
-                        int col = 1 + (int) (Math.random() * 30);
-                        placeTrees(0, col);
-                    }
+            if (probability < 0.7 && probability > 0.4) { // 41-69
+                placeRoad(0);
+                for (int i = 0; i < 3; i++) {
+                    placeCar(0);
                 }
-
-                // Losing game by grid
-                changePlayerLoc(false, 1, p.getX(), p.getY());
-                p.setY(1);
+                placeTruck(0);
+            } else if (probability < 0.85 && probability > 0.7) { // 71-84
+                placeTracks(0);
+                if (train) {
+                    placeTrain(0);
+                }
+            } else if (probability > 0.85) { // 86
+                placeWater(0);
+                for (int i = 0; i < 3; i++) {
+                    placeLog(0);
+                }
+            } else {
+                placeGrass(0);
+                for (int i = 0; i < 5; i++) {
+                    int col = 1 + (int) (Math.random() * 30);
+                    placeTrees(0, col);
+                }
             }
-            System.out.println();
-            printMapping();
 
-            if (p.getY() >= grid.length){
-                lost = true;
-            }
+            // Losing game by grid
+            changePlayerLoc(false, 1, p.getX(), p.getY());
+            p.setY(1);
+        }
+        System.out.println();
+        printMapping();
+
+        if (p.getY() >= grid.length){
+            lost = true;
         }
     }
 
@@ -214,6 +209,7 @@ public class Grid {
                 }
                 i++;
             }
+            System.out.println(grid[x][y]);
             grid[y][x] = new Item(numAssociation, x, y);
 
             if (xChange) {
@@ -236,37 +232,42 @@ public class Grid {
             }
         }
 
-        if (change) {
+        count++;
+        int i = 0;
+        int four = 0;
+
+        if (count == 1) { // next moves before move
             surroundings[0] = grid[p.getY()][p.getX() - 1];
             surroundings[1] = grid[p.getY()][p.getX() + 1];
             surroundings[2] = grid[p.getY() - 1][p.getX()];
             surroundings[3] = grid[p.getY() + 1][p.getX()];
-            change = false;
+            i = 0;
+            four = 4;
+        } else if (count == 2){ // next moves after move
+            surroundings[4] = grid[p.getY()][p.getX() - 1];
+            surroundings[5] = grid[p.getY()][p.getX() + 1];
+            surroundings[6] = grid[p.getY() - 1][p.getX()];
+            surroundings[7] = grid[p.getY() + 1][p.getX()];
+            count = 0;
+            i = 4;
+            four = 8;
         }
 
-        for (int i = 0; i < surroundings.length; i++){
-            System.out.println(surroundings[i]);
-        }
-
-        count++;
-
-        if (count == 2){
-            change = true;
-            for (int i = 0; i < 4; i++){
-                if (surroundings[i].getY() == y && surroundings[i].getX() == x) {
-                    if (surroundings[i].getNumAssociation() == 2) {
-                        return false;
-                    } else if (surroundings[i].getNumAssociation() == 5){
-                        return false;
-                    } else if (surroundings[i].getNumAssociation() == 6) {
-                        return false;
-                    } else if (surroundings[i].getNumAssociation() == 4) {
-                        return false;
-                    }
+        while (i < four){
+//            System.out.println(surroundings[i]);
+            if (surroundings[i].getY() == p.getY() && surroundings[i].getX() == p.getX()) {
+                if (surroundings[i].getNumAssociation() == 2) {
+                    return false;
+                } else if (surroundings[i].getNumAssociation() == 5){
+                    return false;
+                } else if (surroundings[i].getNumAssociation() == 6) {
+                    return false;
+                } else if (surroundings[i].getNumAssociation() == 4) {
+                    return false;
                 }
             }
+            i ++;
         }
-
         return true;
     }
 
