@@ -125,6 +125,8 @@ public class Grid {
 
     public void updateGrid(){
         if (!lost) {
+            changePlayerLoc(false, 1, p.getX(), p.getY());
+
             moveVehicles();
 
             // Moving everything down a row
@@ -159,10 +161,6 @@ public class Grid {
                     placeTrees(0, col);
                 }
             }
-
-            // Losing game by grid
-            changePlayerLoc(false, 1, p.getX(), p.getY());
-            p.setY(1);
 
             System.out.println();
             printMapping();
@@ -199,31 +197,37 @@ public class Grid {
             }
         }
     }
+    // find the row of
+    public void changePlayerLoc(boolean xChange, int changeBy, int x, int y) {
 
-    public void changePlayerLoc(boolean xChange, int changeBy, int x, int y){
         int numAssociation = -1;    // set to a non-game value
         int i = 0;
-        while (numAssociation == -1) {
+        while (numAssociation == -1 && i < 40) {
             if (!(grid[y][i] instanceof Player)) {
                 numAssociation = grid[y][i].getNumAssociation();
             }
             i++;
         }
-        System.out.println(grid[y][x]);
         grid[y][x] = new Item(numAssociation, x, y);
-        System.out.println(grid[y][x]);
 
-        if (!lost) {
-            if (xChange) {
-                grid[y][x + changeBy] = p;
-                p.setX(changeBy);
-            } else {
-                grid[y + changeBy][x] = p;
-                p.setY(changeBy);
-            }
+        if (xChange) {
+            p.setX(changeBy);
+            grid[p.getY()][p.getX()] = p;
+        } else {
+            p.setY(changeBy);
+            grid[p.getY()][p.getX()] = p;
         }
 
-        System.out.println(p.getX() + " " + p.getY());
+        // TEST: CHECKING HOW MANY PLAYERS ARE GENERATED EVERYTIME GRID IS UPDATED
+        int numPlayers = 0;
+        for (int r = 0; r < grid.length; r++){
+            for (int c = 0; c < grid[0].length; c++){
+                if(grid[r][c] instanceof Player){
+                    numPlayers++;
+                }
+            }
+        }
+        System.out.println("Players: " + numPlayers);
     }
 
     public boolean isSafe(int x, int y, String key, boolean start){

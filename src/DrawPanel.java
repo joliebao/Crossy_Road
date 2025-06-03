@@ -5,6 +5,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 import java.io.File;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 public class DrawPanel extends JPanel implements MouseListener, KeyListener {
@@ -27,7 +28,7 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
 
     protected void paintComponent(Graphics g) {
         if (!lost) {
-            lost = !(grid.isSafe(p.getX(), p.getY(), key, startGame));
+//            lost = !(grid.isSafe(p.getX(), p.getY(), key, startGame));
             super.paintComponent(g);
 
             if (startGame && once){ // need to make this happen once
@@ -35,7 +36,7 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
                 once = false;
             }
 
-            if (System.currentTimeMillis() - time == 500) {
+            if (System.currentTimeMillis() - time == 1000) {
                 time = System.currentTimeMillis();
                 grid.updateGrid();
             }
