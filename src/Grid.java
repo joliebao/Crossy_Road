@@ -199,16 +199,16 @@ public class Grid {
     }
     // find the row of
     public void changePlayerLoc(boolean xChange, int changeBy, int x, int y) {
-
-        int numAssociation = -1;    // set to a non-game value
-        int i = 0;
-        while (numAssociation == -1 && i < 40) {
-            if (!(grid[y][i] instanceof Player)) {
-                numAssociation = grid[y][i].getNumAssociation();
+        int num = -1;
+        for (int r = 0; r < grid.length; r++){
+            for (int c = 0; c < grid[0].length; c++){
+                if (!(grid[r][c] instanceof Player)){
+                    num = grid[r][c].getNumAssociation();
+                } else{
+                    grid[r][c] = new Item(num, c, r);
+                }
             }
-            i++;
         }
-        grid[y][x] = new Item(numAssociation, x, y);
 
         if (xChange) {
             p.setX(changeBy);
@@ -230,6 +230,7 @@ public class Grid {
         System.out.println("Players: " + numPlayers);
     }
 
+    //fix later
     public boolean isSafe(int x, int y, String key, boolean start){
         if (start) {
             // player bounds

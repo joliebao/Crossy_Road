@@ -27,6 +27,10 @@ public class Item {
         return numAssociation;
     }
 
+    public void setNumAssociation(int num){
+        numAssociation = num;
+    }
+
     @Override
     public String toString() {
         if(numAssociation == 9){
