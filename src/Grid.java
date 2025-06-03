@@ -218,7 +218,7 @@ public class Grid {
             grid[p.getY()][p.getX()] = p;
         }
 
-        // TEST: CHECKING HOW MANY PLAYERS ARE GENERATED EVERYTIME GRID IS UPDATED
+        // TEST: CHECKING HOW MANY PLAYERS ARE GENERATED EVERYTIME GRID IS UPDATED (Remove later) '''
         int numPlayers = 0;
         for (int r = 0; r < grid.length; r++){
             for (int c = 0; c < grid[0].length; c++){
@@ -231,55 +231,54 @@ public class Grid {
     }
 
     //fix later
-    public boolean isSafe(int x, int y, String key, boolean start){
+    public boolean isLost(int x, int y, String key, boolean start){
         if (start) {
             // player bounds
             if (y >= 30) {
-                return false;
+                return true;
             } else if (x >= 40) {
-                return false;
+                return true;
             } else if (x <= 0) {
-                return false;
+                return true;
             }
-        }
 
-        count++;
-        int i = 0;
-        int four = 0;
+            // to check for collisions, save the value of the previous 4 surrounding option of movement.
+            // check if first move --> is true then
+            // the player makes their move
+            // find move that matches and compare the type of item it is
+            // increment by 1
+            // next save the next 4 surrounding options of movement in 4-8
+            // check if second move --> is true then
+            // the player makes their move
+            // find move that matches and compare the type of item it is
+            // increment by 1
+            // next save the 4 surrounding options of movement in 0-3
 
-        if (count == 1) { // next moves before move
-            surroundings[0] = grid[p.getY()][p.getX() - 1];
-            surroundings[1] = grid[p.getY()][p.getX() + 1];
-            surroundings[2] = grid[p.getY() - 1][p.getX()];
-            surroundings[3] = grid[p.getY() + 1][p.getX()];
-            i = 0;
-            four = 4;
-        } else if (count == 2){ // next moves after move
-            surroundings[4] = grid[p.getY()][p.getX() - 1];
-            surroundings[5] = grid[p.getY()][p.getX() + 1];
-            surroundings[6] = grid[p.getY() - 1][p.getX()];
-            surroundings[7] = grid[p.getY() + 1][p.getX()];
-            count = 0;
-            i = 4;
-            four = 8;
-        }
+            // CONSIDER RECURSIVE FUNCTION(?)
 
-        while (i < four){
-//            System.out.println(surroundings[i]);
-            if (surroundings[i].getY() == p.getY() && surroundings[i].getX() == p.getX()) {
-                if (surroundings[i].getNumAssociation() == 2) {
-                    return false;
-                } else if (surroundings[i].getNumAssociation() == 5){
-                    return false;
-                } else if (surroundings[i].getNumAssociation() == 6) {
-                    return false;
-                } else if (surroundings[i].getNumAssociation() == 4) {
-                    return false;
+            count++;
+            if (count % 2 == 1) { // next moves before move
+                surroundings[0] = grid[p.getY()][p.getX() - 1];
+                surroundings[1] = grid[p.getY()][p.getX() + 1];
+                surroundings[2] = grid[p.getY() - 1][p.getX()];
+                surroundings[3] = grid[p.getY() + 1][p.getX()];
+            } else { // next moves after move
+                surroundings[4] = grid[p.getY()][p.getX() - 1];
+                surroundings[5] = grid[p.getY()][p.getX() + 1];
+                surroundings[6] = grid[p.getY() - 1][p.getX()];
+                surroundings[7] = grid[p.getY() + 1][p.getX()];
+            }
+
+            for (int i = 0; i < 4; i++){
+                Item collider = (Item) surroundings[i];
+                int c = surroundings[i].getX();
+                int r = surroundings[i].getY();
+                if (c == p.getX() && r == p.getY()){
+                    if ()
                 }
             }
-            i ++;
         }
-        return !lost;
+        return lost;
     }
 
     // Need to save the type of item before it is changed to the player!
