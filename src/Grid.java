@@ -53,32 +53,26 @@ public class Grid {
     }
 
     public void placeCar(int row){
-        for (int i = 0; i < 2; i++) {
+        for (int col = 0; col < 2; col++) {
             int locX = (int) (Math.random() * 30);
 
             // avoid overlap
             if (getNumAssociation(row, locX) != 1 && getNumAssociation(row, locX + 2) != 1){
                 locX = (int) (Math.random() * 30);
             }
-
-            for (int col = 0; col < 2; col++) {
-                grid[row][locX + col] = new Vehicle(5, locX, row);
-            }
+            grid[row][locX + col] = new Vehicle(5, locX, row);
         }
     }
 
     public void placeTruck(int row){
-        for (int i = 0; i < 2; i++) {
+        for (int col = 0; col < 3; col++) {
             int locX = (int) (Math.random() * 30);
 
             // avoid overlap
             if (getNumAssociation(row, locX) != 1 && getNumAssociation(row, locX + 3) != 1){
                 locX = (int) (Math.random() * 30);
             }
-
-            for (int col = 0; col < 3; col++) {
-                grid[row][locX + col] = new Vehicle(6, locX, row);
-            }
+            grid[row][locX + col] = new Vehicle(6, locX, row);
         }
     }
 
@@ -174,30 +168,49 @@ public class Grid {
     public void moveVehicles(){
         int numAssociationFloor = 0;
         for (int r = 0; r < grid.length; r++){
-            int counter = 0;
-            int often = (int) (Math.random() * 4) + 5;
             for (int c = grid[0].length - 1; c > 0; c--){
                 if (grid[r][c] instanceof Vehicle){
-                    counter ++;
+                    // load new vehicles
+                    loadVehicles(r);
+
                     int start = grid[r][c].getStart();
                     int numAssociation = grid[r][c].getNumAssociation();
 
-                    // keeps only updating the start
+                    // updates the start
                     if (c + 1 < grid[0].length) {
                         grid[r][c + 1] = new Vehicle(numAssociation, start + 1, r);
                     }
                     grid[r][c] = new Item(numAssociationFloor, c, r);
 
-                    if (often == counter){
-                        grid[r][c + 1] = new Vehicle(numAssociation, 0, r);
-                    }
                 } else {
                     numAssociationFloor = grid[r][c].getNumAssociation();
                 }
             }
         }
     }
-    // find the row of
+
+    public void loadVehicles(int row){
+        double random = Math.random();
+
+        if (random < 0.25){
+            for (int i = 0; i < 2; i++) {
+                for (int col = 0; col < 2; col++) {
+                    grid[row][0] = new Vehicle(5, 0, row);
+                }
+            }
+        } else if (random < 0.5 && random > 0.25){
+            for (int i = 0; i < 2; i++) {
+                for (int col = 0; col < 2; col++) {
+                    grid[row][0] = new Vehicle(5, 0, row);
+                }
+            }
+        } else if (random < 0.75 && random > 0.5){
+            // logs
+        } else if (random > 0.75){
+            train = true;
+        }
+    }
+
     public void changePlayerLoc(boolean xChange, int changeBy, int x, int y) {
         int num = -1;
         for (int r = 0; r < grid.length; r++){
