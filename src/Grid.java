@@ -217,20 +217,8 @@ public class Grid {
             p.setY(changeBy);
             grid[p.getY()][p.getX()] = p;
         }
-
-        // TEST: CHECKING HOW MANY PLAYERS ARE GENERATED EVERYTIME GRID IS UPDATED (Remove later) '''
-        int numPlayers = 0;
-        for (int r = 0; r < grid.length; r++){
-            for (int c = 0; c < grid[0].length; c++){
-                if(grid[r][c] instanceof Player){
-                    numPlayers++;
-                }
-            }
-        }
-        System.out.println("Players: " + numPlayers);
     }
 
-    //fix later
     public boolean isLost(int x, int y, boolean pressed, boolean start){
         if (start) {
             // player bounds
@@ -242,45 +230,15 @@ public class Grid {
                 return true;
             }
 
-            // CONSIDER RECURSIVE FUNCTION(?)
-
             if (pressed){
                 count++;
             }
-
-            // need to save this same value instead of the same object,,, keeps changing because the original object changed
 
             surroundings[0] = new Item (grid[p.getY()][p.getX() - 1].getNumAssociation(), p.getX() - 1, p.getY());
             surroundings[1] = new Item (grid[p.getY()][p.getX() + 1].getNumAssociation(), p.getX() + 1, p.getY());
             surroundings[2] = new Item (grid[p.getY() - 1][p.getX()].getNumAssociation(), p.getX(), p.getY() - 1);
             surroundings[3] = new Item (grid[p.getY() + 1][p.getX()].getNumAssociation(), p.getX(), p.getY() + 1);
 
-//            if (count % 2 == 1) { // next moves before move
-//                surroundings[0] = new Item (grid[p.getY()][p.getX() - 1].getNumAssociation(), p.getX() - 1, p.getY());
-//                surroundings[1] = new Item (grid[p.getY()][p.getX() + 1].getNumAssociation(), p.getX() + 1, p.getY());
-//                surroundings[2] = new Item (grid[p.getY() - 1][p.getX()].getNumAssociation(), p.getX(), p.getY() - 1);
-//                surroundings[3] = new Item (grid[p.getY() + 1][p.getX()].getNumAssociation(), p.getX(), p.getY() + 1);
-//            } else if (count % 2 == 0) { // next moves after move
-//                surroundings[4] = new Item (grid[p.getY()][p.getX() - 1].getNumAssociation(), p.getX() - 1, p.getY());
-//                surroundings[5] = new Item (grid[p.getY()][p.getX() + 1].getNumAssociation(), p.getX() + 1, p.getY());
-//                surroundings[6] = new Item (grid[p.getY() - 1][p.getX()].getNumAssociation(), p.getX(), p.getY() - 1);
-//                surroundings[7] = new Item (grid[p.getY() + 1][p.getX()].getNumAssociation(), p.getX(), p.getY() + 1);
-//            }
-
-            // test code
-            for (int i = 0; i < surroundings.length; i++){
-                if (surroundings[i] != null) {
-                    System.out.print("Item:    " + surroundings[i].getX() + " " + surroundings[i].getY() + "           " + surroundings[i]);
-                } else {
-                    System.out.print("null");
-                }
-                System.out.println();
-            }
-
-            System.out.println("Player:    " + p.getX() + " " + p.getY());
-            System.out.println();
-
-            // algorithm -----------------------------------------------------------------------------------------------------------------------------
             for (int i = 0; i < 4; i++){
                 Item collider = surroundings[i];
                 int c = 0;
