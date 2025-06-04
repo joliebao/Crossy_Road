@@ -5,7 +5,7 @@ public class Item {
     protected int x;
 
     public Item (int num, int x, int y){
-        x = x;
+        this.x = x;
         start = x;
         this.y = y;
         numAssociation = num;

@@ -13,22 +13,23 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
     private Player p = new Player();;
     private Grid grid;
     private boolean lost;
-    private int score;
+    private int score = 0;
     private static String key;
     private long time;
     private boolean once = true;
+    private boolean pressed;
 
     public DrawPanel() {
         grid = new Grid();
         this.addMouseListener(this);
         this.addKeyListener(this);
         this.setFocusable(true);
-        score = 0;
     }
 
     protected void paintComponent(Graphics g) {
         if (!lost) {
-            lost = grid.isLost(p.getX(), p.getY(), key, startGame);
+            lost = grid.isLost(p.getX(), p.getY(), pressed, startGame);
+            pressed = false;
             super.paintComponent(g);
 
             if (startGame && once){ // need to make this happen once
@@ -115,6 +116,8 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
+        pressed = true;
+
         startGame = true;
         key = String.valueOf(e.getKeyChar());
         movePlayer(key);
