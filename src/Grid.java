@@ -9,6 +9,7 @@ public class Grid {
     private boolean lost;
     private static Item[] surroundings = new Item[8];
     private static int count = 0;
+    private static ArrayList<Integer> loadingVehicles = new ArrayList<Integer>();
 
     // generate random grid -> needs numbers from 1-9 randomly generated
     public Grid(){
@@ -166,11 +167,32 @@ public class Grid {
     }
 
     public void moveVehicles(){
+        // train commands
+        if (train){ // add timer
+            for (int r = 0; r < grid.length; r++){
+                if (grid[r][0].getNumAssociation() == 3){
+                    for (int c = 0; c < grid[0].length; c++){
+                        grid[r][c] = new Item(7, c, r);
+                    }
+                }
+            }
+
+            train = false;
+            for (int r = 0; r < grid.length; r++){
+                if (grid[r][0].getNumAssociation() == 7){
+                    for (int c = 0; c < grid[0].length; c++){
+                        grid[r][c] = new Item(3, c, r);
+                    }
+                }
+            }
+        }
+
         int numAssociationFloor = 0;
         for (int r = 0; r < grid.length; r++){
             for (int c = grid[0].length - 1; c > 0; c--){
                 if (grid[r][c] instanceof Vehicle){
                     // load new vehicles
+
                     loadVehicles(r);
 
                     int start = grid[r][c].getStart();
@@ -189,26 +211,39 @@ public class Grid {
         }
     }
 
-    public void loadVehicles(int row){
+    public ArrayList<Integer> loadVehicles(int row){
         double random = Math.random();
 
         if (random < 0.25){
-            for (int i = 0; i < 2; i++) {
-                for (int col = 0; col < 2; col++) {
-                    grid[row][0] = new Vehicle(5, 0, row);
-                }
+            loadingVehicles.add(2);
+            for (int i = 0; i < 2; i++) { // add this to drawpanel class
+                grid[row][0] = new Vehicle(5, 0, row);
             }
         } else if (random < 0.5 && random > 0.25){
-            for (int i = 0; i < 2; i++) {
-                for (int col = 0; col < 2; col++) {
-                    grid[row][0] = new Vehicle(5, 0, row);
-                }
+            loadingVehicles.add(3);
+            for (int i = 0; i < 3; i++) {
+                grid[row][0] = new Vehicle(6, 0, row);
             }
         } else if (random < 0.75 && random > 0.5){
-            // logs
+            loadingVehicles.add(6);
+            for (int i = 0; i < 6; i++) {
+                grid[row][0] = new Vehicle(8, 0, row);
+            }
         } else if (random > 0.75){
             train = true;
         }
+
+        for (int i = 0; i < loadingVehicles.size(); i ++){
+            int num = loadingVehicles.get(i) - 1;
+            if (num == 0){
+                loadingVehicles.remove(i);
+                i--;
+            } else {
+                loadingVehicles.set(i, num);
+            }
+        }
+
+        return loadingVehicles;
     }
 
     public void changePlayerLoc(boolean xChange, int changeBy, int x, int y) {
