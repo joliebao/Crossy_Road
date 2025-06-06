@@ -32,12 +32,12 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
             pressed = false;
             super.paintComponent(g);
 
-            if (startGame && once){ // need to make this happen once
+            if (startGame && once){
                 time = System.currentTimeMillis();
                 once = false;
             }
 
-            if (System.currentTimeMillis() - time == 1000) {
+            if (System.currentTimeMillis() - time == 300) {
                 time = System.currentTimeMillis();
                 grid.updateGrid();
             }
@@ -77,7 +77,10 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
                     }
                 }
             }
+            Font font = new Font("Trebuchet MS", Font.PLAIN, 30);
+            g.setFont(font);
             g.setColor(Color.black);
+            g.drawString("Score: " + score, 20, 40);
 
             Graphics2D g2 = (Graphics2D) g;
 
@@ -124,8 +127,6 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
 
         if (key.equals("w")){
             score++;
-        } else if (key.equals("s")){
-            score--;
         }
     }
 

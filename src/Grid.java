@@ -289,8 +289,8 @@ public class Grid {
 
             for (int i = 0; i < 4; i++){
                 Item collider = surroundings[i];
-                int c = 0;
-                int r = 0;
+                int c;
+                int r;
 
                 if (count % 2 == 1) {
                     c = surroundings[i].getX();
