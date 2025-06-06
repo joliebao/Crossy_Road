@@ -218,11 +218,14 @@ public class Grid {
     }
 
     public ArrayList<Integer> loadVehicles(int row){
+        // consider saving the loading vehicles as a String
+        // ex. "car 2"
+        // or consider making it a new object
         double random = Math.random();
 
         if (random < 0.25){
             loadingVehicles.add(2);
-            for (int i = 0; i < 2; i++) { // add this to drawpanel class
+            for (int i = 0; i < 2; i++) { // only does this to one thing
                 grid[row][0] = new Vehicle(5, 0, row);
             }
         } else if (random < 0.5 && random > 0.25){
