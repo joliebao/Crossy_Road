@@ -10,6 +10,7 @@ public class Grid {
     private static Item[] surroundings = new Item[8];
     private static int count = 0;
     private static ArrayList<Integer> loadingVehicles = new ArrayList<Integer>();
+    private static long trainTime;
 
     // generate random grid -> needs numbers from 1-9 randomly generated
     public Grid(){
@@ -167,26 +168,6 @@ public class Grid {
     }
 
     public void moveVehicles(){
-        // train commands
-        if (train){ // add timer
-            for (int r = 0; r < grid.length; r++){
-                if (grid[r][0].getNumAssociation() == 3){
-                    for (int c = 0; c < grid[0].length; c++){
-                        grid[r][c] = new Item(7, c, r);
-                    }
-                }
-            }
-
-            train = false;
-            for (int r = 0; r < grid.length; r++){
-                if (grid[r][0].getNumAssociation() == 7){
-                    for (int c = 0; c < grid[0].length; c++){
-                        grid[r][c] = new Item(3, c, r);
-                    }
-                }
-            }
-        }
-
         int numAssociationFloor = 0;
         for (int r = 0; r < grid.length; r++){
             for (int c = grid[0].length - 1; c > 0; c--){
@@ -194,6 +175,7 @@ public class Grid {
                     // load new vehicles
 
                     loadVehicles(r);
+                    trainPassing();
 
                     int start = grid[r][c].getStart();
                     int numAssociation = grid[r][c].getNumAssociation();
@@ -206,6 +188,30 @@ public class Grid {
 
                 } else {
                     numAssociationFloor = grid[r][c].getNumAssociation();
+                }
+            }
+        }
+    }
+
+    public void trainPassing(){
+        // train commands
+        if (train){ // add timer
+            for (int r = 0; r < grid.length; r++){ // set to train
+                if (grid[r][0].getNumAssociation() == 3){
+                    for (int c = 0; c < grid[0].length; c++){
+                        grid[r][c] = new Item(7, c, r);
+                    }
+                }
+            }
+        }
+
+        if (trainTime - System.currentTimeMillis() == 1000){
+            train = false;
+            for (int r = 0; r < grid.length; r++){
+                if (grid[r][0].getNumAssociation() == 7){
+                    for (int c = 0; c < grid[0].length; c++){
+                        grid[r][c] = new Item(3, c, r);
+                    }
                 }
             }
         }
@@ -231,6 +237,7 @@ public class Grid {
             }
         } else if (random > 0.75){
             train = true;
+            trainTime = System.currentTimeMillis();
         }
 
         for (int i = 0; i < loadingVehicles.size(); i ++){
