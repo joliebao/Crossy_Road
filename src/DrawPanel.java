@@ -71,10 +71,9 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
                     } else if (grid.getNumAssociation(r,c) == 8) {
                         g.setColor(Color.getHSBColor(8, 88, 18));
                         g.fillRect(c * 30, r * 30, 30, 30);
-                    } else if (grid.getNumAssociation(r,c) == 9) {
-                        g.setColor(Color.cyan);
-                        g.fillRect(p.getX() * 30, p.getY() * 30, 30, 30);
                     }
+                    g.setColor(Color.cyan);
+                    g.fillRect(grid.getPlayerX() * 30, grid.getPlayerY() * 30, 30, 30);
                 }
             }
             Font font = new Font("Trebuchet MS", Font.PLAIN, 30);

@@ -205,7 +205,7 @@ public class Grid {
             }
         }
 
-        if (trainTime - System.currentTimeMillis() == 1000){
+        if (trainTime - System.currentTimeMillis() == 300){
             train = false;
             for (int r = 0; r < grid.length; r++){
                 if (grid[r][0].getNumAssociation() == 7){
@@ -348,5 +348,13 @@ public class Grid {
 
     public int getNumAssociation(int r, int c){
         return grid[r][c].getNumAssociation();
+    }
+
+    public int getPlayerX(){
+        return p.getX();
+    }
+
+    public int getPlayerY(){
+        return p.getY();
     }
 }
