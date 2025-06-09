@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -43,8 +42,8 @@ public class Grid {
 
             grid[p.getY()][p.getX()] = p;
         }
-        System.out.println();
-        printMapping();
+//        System.out.println();
+//        printMapping();
     }
 
     // need to edit this to place as many roads as I input for each section
@@ -122,7 +121,9 @@ public class Grid {
     public void updateGrid(){
         if (!lost) {
             changePlayerLoc(false, 1, p.getX(), p.getY());
-
+            if (System.currentTimeMillis() - trainTime == 300){
+                train = false;
+            }
             moveVehicles();
 
             // Moving everything down a row
@@ -157,9 +158,8 @@ public class Grid {
                     placeTrees(0, col);
                 }
             }
-
-            System.out.println();
-            printMapping();
+//            System.out.println();
+//            printMapping();
         }
 
         if (p.getY() >= 29){
@@ -173,7 +173,6 @@ public class Grid {
             for (int c = grid[0].length - 1; c > 0; c--){
                 if (grid[r][c] instanceof Vehicle){
                     // load new vehicles
-
                     loadVehicles(r);
                     trainPassing();
 
@@ -195,7 +194,7 @@ public class Grid {
 
     public void trainPassing(){
         // train commands
-        if (train){ // add timer
+        if (train){
             for (int r = 0; r < grid.length; r++){ // set to train
                 if (grid[r][0].getNumAssociation() == 3){
                     for (int c = 0; c < grid[0].length; c++){
@@ -203,10 +202,7 @@ public class Grid {
                     }
                 }
             }
-        }
-
-        if (trainTime - System.currentTimeMillis() == 100){
-            train = false;
+        } else {
             for (int r = 0; r < grid.length; r++){
                 if (grid[r][0].getNumAssociation() == 7){
                     for (int c = 0; c < grid[0].length; c++){
@@ -217,10 +213,7 @@ public class Grid {
         }
     }
 
-    public ArrayList<Integer> loadVehicles(int row){
-        // consider saving the loading vehicles as a String
-        // ex. "car 2"
-        // or consider making it a new object
+    public void loadVehicles(int row){
         double random = Math.random();
 
         if (random < 0.25){
@@ -233,12 +226,12 @@ public class Grid {
             for (int i = 0; i < 3; i++) {
                 grid[row][0] = new Vehicle(6, 0, row);
             }
-        } else if (random < 0.75 && random > 0.5){
+        } else if (random < 0.85 && random > 0.5){
             loadingVehicles.add(6);
             for (int i = 0; i < 6; i++) {
                 grid[row][0] = new Vehicle(8, 0, row);
             }
-        } else if (random > 0.75){
+        } else if (random > 0.85 && !train){
             train = true;
             trainTime = System.currentTimeMillis();
         }
@@ -252,8 +245,6 @@ public class Grid {
                 loadingVehicles.set(i, num);
             }
         }
-
-        return loadingVehicles;
     }
 
     public void changePlayerLoc(boolean xChange, int changeBy, int x, int y) {
