@@ -28,7 +28,7 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
 
     protected void paintComponent(Graphics g) {
         if (!lost) {
-            lost = grid.isLost(p.getX(), p.getY(), pressed, startGame);
+            lost = grid.isLost(pressed, startGame);
             pressed = false;
             super.paintComponent(g);
 

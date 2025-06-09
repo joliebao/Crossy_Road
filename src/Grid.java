@@ -205,7 +205,7 @@ public class Grid {
             }
         }
 
-        if (trainTime - System.currentTimeMillis() == 300){
+        if (trainTime - System.currentTimeMillis() == 100){
             train = false;
             for (int r = 0; r < grid.length; r++){
                 if (grid[r][0].getNumAssociation() == 7){
@@ -277,14 +277,14 @@ public class Grid {
         }
     }
 
-    public boolean isLost(int x, int y, boolean pressed, boolean start){
+    public boolean isLost(boolean pressed, boolean start){
         if (start) {
             // player bounds
-            if (y >= 30) {
+            if (p.getY() >= 29) {
                 return true;
-            } else if (x >= 40) {
+            } else if (p.getX() >= 39) {
                 return true;
-            } else if (x <= 0) {
+            } else if (p.getX() <= 0) {
                 return true;
             }
 
