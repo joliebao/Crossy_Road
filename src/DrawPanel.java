@@ -1,10 +1,13 @@
 import java.awt.*;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
-import java.io.File;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
 
@@ -44,36 +47,8 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
 
             for (int r = 0; r < grid.getRLength(); r++){
                 for (int c = 0; c < grid.getCLength(); c++){
-                    if (grid.getNumAssociation(r,c) == 0){
-                        g.setColor(Color.green);
-                        g.fillRect(c * 30, r * 30, 30, 30);
-                    } else if (grid.getNumAssociation(r,c) == 1) {
-                        g.setColor(Color.gray);
-                        g.fillRect(c * 30, r * 30, 30, 30);
-                    } else if (grid.getNumAssociation(r,c) == 2) {
-                        g.setColor(Color.blue);
-                        g.fillRect(c * 30, r * 30, 30, 30);
-                    } else if (grid.getNumAssociation(r,c) == 3) {
-                        g.setColor(Color.lightGray);
-                        g.fillRect(c * 30, r * 30, 30, 30);
-                    } else if (grid.getNumAssociation(r,c) == 4) {
-                        g.setColor(Color.getHSBColor(12, 100, 28));
-                        g.fillRect(c * 30, r * 30, 30, 30);
-                    } else if (grid.getNumAssociation(r,c) == 5) {
-                        g.setColor(Color.red);
-                        g.fillRect(c * 30, r * 30, 30, 30);
-                    } else if (grid.getNumAssociation(r,c) == 6) {
-                        g.setColor(Color.magenta);
-                        g.fillRect(c * 30, r * 30, 30, 30);
-                    } else if (grid.getNumAssociation(r,c) == 7) {
-                        g.setColor(Color.white);
-                        g.fillRect(c * 30, r * 30, 30, 30);
-                    } else if (grid.getNumAssociation(r,c) == 8) {
-                        g.setColor(Color.getHSBColor(8, 88, 18));
-                        g.fillRect(c * 30, r * 30, 30, 30);
-                    }
-                    g.setColor(Color.cyan);
-                    g.fillRect(grid.getPlayerX() * 30, grid.getPlayerY() * 30, 30, 30);
+                    Item itm = grid.getItem(r, c);
+                    g.drawImage(itm.getTileImg(), c * 30, r * 30, null);
                 }
             }
             Font font = new Font("Trebuchet MS", Font.PLAIN, 30);

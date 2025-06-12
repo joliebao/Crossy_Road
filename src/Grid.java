@@ -1,3 +1,4 @@
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -347,5 +348,9 @@ public class Grid {
 
     public int getPlayerY(){
         return p.getY();
+    }
+
+    public Item getItem(int r, int c){
+        return grid[r][c];
     }
 }

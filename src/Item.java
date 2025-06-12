@@ -1,5 +1,4 @@
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -10,7 +9,6 @@ public class Item {
     protected int y;
     protected int x;
     protected BufferedImage tileImg;
-
 
     public Item (int num, int x, int y) {
         this.x = x;
@@ -41,6 +39,10 @@ public class Item {
         } else if (numAssociation == 9) {
             tileImg = loadImage("Sprites/Player.png");
         }
+    }
+
+    public BufferedImage getTileImg() {
+        return tileImg;
     }
 
     public int getStart(){
