@@ -33,6 +33,7 @@ public class Item {
             // do back too
         } else if (numAssociation == 6) {
             tileImg = loadImage("Sprites/TruckFront.png");
+            // do middle and back
         } else if (numAssociation == 7) {
             tileImg = loadImage("Sprites/Train.png");
         } else if (numAssociation == 8) {
