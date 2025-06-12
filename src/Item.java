@@ -9,6 +9,7 @@ public class Item {
     protected int y;
     protected int x;
     protected BufferedImage tileImg;
+    protected BufferedImage resizedImg;
 
     public Item (int num, int x, int y) {
         this.x = x;
@@ -39,6 +40,10 @@ public class Item {
         } else if (numAssociation == 9) {
             tileImg = loadImage("Sprites/Player.png");
         }
+
+        BufferedImage resizedImg = scaleImage(tileImg, 30, 30);
+//         Find way to resize this
+//        tileImg = (BufferedImage) tileImg.getScaledInstance(30, 30, BufferedImage.SCALE_REPLICATE);
     }
 
     public BufferedImage getTileImg() {

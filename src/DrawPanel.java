@@ -45,6 +45,8 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
                 grid.updateGrid();
             }
 
+            Graphics2D g2 = (Graphics2D) g;
+
             for (int r = 0; r < grid.getRLength(); r++){
                 for (int c = 0; c < grid.getCLength(); c++){
                     Item itm = grid.getItem(r, c);
@@ -55,8 +57,6 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
             g.setFont(font);
             g.setColor(Color.black);
             g.drawString("Score: " + score, 20, 40);
-
-            Graphics2D g2 = (Graphics2D) g;
 
             int y = 0;
             // Drawing squares 30 x 40
