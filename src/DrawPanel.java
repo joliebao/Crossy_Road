@@ -9,7 +9,6 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 import java.sql.SQLOutput;
-import java.util.ArrayList;
 
 public class DrawPanel extends JPanel implements MouseListener, KeyListener {
     private boolean startGame;
@@ -50,25 +49,13 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
             for (int r = 0; r < grid.getRLength(); r++){
                 for (int c = 0; c < grid.getCLength(); c++){
                     Item itm = grid.getItem(r, c);
-                    g.drawImage(itm.getTileImg(), c * 30, r * 30, null);
+                    g.drawImage(itm.getTileImg(), c * 30, r * 30, 51, 51, null);
                 }
             }
             Font font = new Font("Trebuchet MS", Font.PLAIN, 30);
             g.setFont(font);
             g.setColor(Color.black);
             g.drawString("Score: " + score, 20, 40);
-
-            int y = 0;
-            // Drawing squares 30 x 40
-            for (int rows = 0; rows < 30; rows++) {
-                int x = 0;
-
-                for (int cols = 0; cols < 40; cols++) {
-                    g.drawRect(x, y, 30, 30);
-                    x += 30;
-                }
-                y += 30;
-            }
         } else {
             Font font = new Font("Georgia", Font.BOLD, 100);
             g.setFont(font);

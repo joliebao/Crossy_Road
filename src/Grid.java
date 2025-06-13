@@ -43,8 +43,8 @@ public class Grid {
 
             grid[p.getY()][p.getX()] = p;
         }
-//        System.out.println();
-//        printMapping();
+        System.out.println();
+        printMapping();
     }
 
     // need to edit this to place as many roads as I input for each section
@@ -159,8 +159,8 @@ public class Grid {
                     placeTrees(0, col);
                 }
             }
-//            System.out.println();
-//            printMapping();
+            System.out.println();
+            printMapping();
         }
 
         if (p.getY() >= 29){
