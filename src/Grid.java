@@ -9,8 +9,10 @@ public class Grid {
     private boolean lost;
     private static Item[] surroundings = new Item[8];
     private static int count = 0;
+    private int trainCounter = 0;
     private static ArrayList<Integer> loadingVehicles = new ArrayList<Integer>();
     private static long trainTime;
+    private Item savedItem;
 
     // generate random grid -> needs numbers from 1-9 randomly generated
     public Grid(){
@@ -249,6 +251,12 @@ public class Grid {
     }
 
     public void changePlayerLoc(boolean xChange, int changeBy, int x, int y) {
+        if (xChange) { // need to change this
+            savedItem = grid[y][x+changeBy];
+        } else {
+            savedItem = grid[y+changeBy][x];
+        }
+
         int num = -1;
         for (int r = 0; r < grid.length; r++){
             for (int c = 0; c < grid[0].length; c++){
