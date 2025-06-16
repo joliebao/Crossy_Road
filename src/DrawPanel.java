@@ -88,6 +88,8 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
 
         if (key.equals("w")){
             score++;
+        } else if (key.equals("s")){
+            score--;
         }
     }
 

@@ -11,7 +11,6 @@ public class Grid {
     private static int count = 0;
     private int trainCounter = 0;
     private static ArrayList<Integer> loadingVehicles = new ArrayList<Integer>();
-    private static long trainTime;
     private Item savedItem;
 
     // generate random grid -> needs numbers from 1-9 randomly generated
@@ -124,8 +123,14 @@ public class Grid {
     public void updateGrid(){
         if (!lost) {
             changePlayerLoc(false, 1, p.getX(), p.getY());
-            if (System.currentTimeMillis() - trainTime == 300){
+
+            if (trainCounter < 1000 && train){
+                trainCounter++;
+            }
+
+            if (trainCounter == 1000){
                 train = false;
+                trainCounter = 0;
             }
             moveVehicles();
 
@@ -236,7 +241,6 @@ public class Grid {
             }
         } else if (random > 0.85 && !train){
             train = true;
-            trainTime = System.currentTimeMillis();
         }
 
         for (int i = 0; i < loadingVehicles.size(); i ++){
