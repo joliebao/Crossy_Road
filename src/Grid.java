@@ -123,15 +123,6 @@ public class Grid {
     public void updateGrid(){
         if (!lost) {
             changePlayerLoc(false, 1, p.getX(), p.getY());
-
-            if (trainCounter < 1000 && train){
-                trainCounter++;
-            }
-
-            if (trainCounter == 1000){
-                train = false;
-                trainCounter = 0;
-            }
             moveVehicles();
 
             // Moving everything down a row
@@ -179,7 +170,7 @@ public class Grid {
         int numAssociationFloor = 0;
         for (int r = 0; r < grid.length; r++){
             for (int c = grid[0].length - 1; c > 0; c--){
-                if (grid[r][c] instanceof Vehicle){
+                if (grid[r][c] instanceof Vehicle && grid[r][c].getNumAssociation() != 7){
                     // load new vehicles
                     loadVehicles(r);
                     trainPassing();
@@ -201,6 +192,14 @@ public class Grid {
     }
 
     public void trainPassing(){
+        if (trainCounter < 1000 && train){
+            trainCounter++;
+        }
+
+        if (trainCounter == 1000){
+            train = false;
+            trainCounter = 0;
+        }
         // train commands
         if (train){
             for (int r = 0; r < grid.length; r++){ // set to train
